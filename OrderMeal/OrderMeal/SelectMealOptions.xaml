@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="OrderMeal.SelectMealOptions">
+    <!--<ContentPage.Content>
+    </ContentPage.Content>-->
+    
+    
+    <Grid RowSpacing="0">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="AUTO"/>
+        </Grid.RowDefinitions>
+        
+<!--        <BoxView BackgroundColor="Gray" Grid.Row="0" HeightRequest="250"/>-->
+        <Image Source="pexels-photo-461198.jpeg" Aspect="AspectFill" HeightRequest="250" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Grid.Row="0"/>
+        
+<!--        <BoxView BackgroundColor="Navy" Grid.Row="1" />-->
+        
+        <!--<ListView Grid.Row="1" x:Name="selectOptions" SeparatorVisibility="Default" RowHeight="150" HeightRequest="200" SelectionMode="Single" ItemSelected="Handle_ItemSelected">
+            <ListView.Footer>
+                <StackLayout Orientation="Horizontal"/>
+            </ListView.Footer>
+        </ListView>-->
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="1"/>
+        
+        <StackLayout Grid.Row="1" Orientation="Vertical">
+            
+            <StackLayout Orientation="Horizontal"  Padding="15">
+                
+                <Label Text="Option One:" Grid.Row="1"/>
+                
+                <StackLayout Orientation="Vertical">
+                    <Label Text="• Bhaji"/>
+                    <Label Text="• Daal"/>
+                    <Label Text="• 2 Chapatis"/>
+                    <Label Text="• Rice"/>
+                </StackLayout>
+                
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Price per order: $20" FontSize="14"/>
+                    <Label Text="Number of orders:"/>
+                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Text="0" TextColor="Silver"/>
+                </StackLayout>
+                
+            </StackLayout>
+            
+            <Image BackgroundColor="Silver" HeightRequest="0.5"/>
+            
+            <StackLayout Orientation="Horizontal" Padding="15">
+                
+                <Label Text="Option Two:" Grid.Row="1"/>
+                
+                <StackLayout Orientation="Vertical">
+                    <Label Text="• Bhaji"/>
+                    <Label Text="• Daal"/>
+                    <Label Text="• 4 Chapatis"/>
+                </StackLayout>
+                
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Price per order: $24" FontSize="14"/>
+                    <Label Text="Number of orders:"/>
+                <Entry x:Name="optionTwo" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Text="0" TextColor="Silver"/>
+                </StackLayout>
+                
+            </StackLayout>
+            
+        </StackLayout>
+        
+        <StackLayout Grid.Row="2" Padding="40">
+            <Button Text="Proceed to Checkout" Grid.Row="2" HeightRequest="50" BorderColor="Gray" BorderWidth="0.5" x:Name="checkout" Clicked="Handle_Clicked"/>
+        </StackLayout>
+        
+    </Grid>
+    
+</ContentPage>

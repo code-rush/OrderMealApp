@@ -1,0 +1,19 @@
+﻿<Properties StartupConfiguration="{22BD34F7-6343-401F-B295-955336A1289E}|Default">
+  <MonoDevelop.Ide.ItemProperties.OrderMeal.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.AFEE7F6F-19C0-47F8-9CC7-5ED5D91EFB12" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="OrderMeal/SelectMealOptions.xaml.cs">
+    <Files>
+      <File FileName="OrderMeal/App.xaml.cs" Line="23" Column="42" />
+      <File FileName="OrderMeal/SelectMealOptions.xaml" Line="80" Column="1" />
+      <File FileName="OrderMeal/SelectMealOptions.xaml.cs" Line="21" Column="6" />
+      <File FileName="OrderMeal/CheckOutPage.xaml" Line="86" Column="1" />
+      <File FileName="OrderMeal/CheckOutPage.xaml.cs" Line="27" Column="18" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.OrderMeal.Android AndroidDesignerPreferredTheme="Theme.DeviceDefault.NoActionBar.Fullscreen" PreferredExecutionTarget="Android.Android_Accelerated_Oreo" />
+</Properties>
