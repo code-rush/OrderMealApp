@@ -25,10 +25,10 @@
 </head>
 <body>
 	<div>
-		<form enctype="multipart/form-data">
+		<form action="https://o5yv1ecpk1.execute-api.us-west-2.amazonaws.com/dev/api/v1/meal/image/upload" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<legend>Upload Meal Photo</legend>
-				<input type="file" id="meal" name="meal" accept="image/png, image/jpeg" />
+				<input type="file" id="meal" name="image" accept="image/png, image/jpeg" />
 				<button onclick="uploadImage()">Upload</button>
 			</fieldset>
 		</form>

@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-02-16 18:04:36
+# @Last Modified time: 2019-02-17 14:06:55
 
 
 import os
@@ -24,7 +24,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 
 api = Api(app)
 mail = Mail(app)
@@ -93,18 +93,18 @@ class MealOrders(Resource):
         order_date = datetime.datetime.now().strftime("%Y-%m-%d")
         order_time = datetime.datetime.now().strftime("%H:%M:%S")
 
-        if request.get('email') == None \
-          or request.get('name') == None \
-          or request.get('street') == None \
-          or request.get('zipCode') == None \
-          or request.get('city') == None \
-          or request.get('state') == None \
-          or request.get('totalAmount') == None \
-          or request.get('paid') == None \
-          or request.get('paymentType') == None \
-          or request.get('deliveryTime') == None \
-          or request.get('mealOption1') == None \
-          or request.get('mealOption2') == None:
+        if data.get('email') == None \
+          or data.get('name') == None \
+          or data.get('street') == None \
+          or data.get('zipCode') == None \
+          or data.get('city') == None \
+          or data.get('state') == None \
+          or data.get('totalAmount') == None \
+          or data.get('paid') == None \
+          or data.get('paymentType') == None \
+          or data.get('deliveryTime') == None \
+          or data.get('mealOption1') == None \
+          or data.get('mealOption2') == None:
             raise BadRequest('Request failed. Please provide all \
                               required information.')
 
@@ -115,18 +115,18 @@ class MealOrders(Resource):
                 Item={'order_id': {'S': order_id},
                       'order_date': {'S': order_date},
                       'order_time': {'S': order_time},
-                      'email': {'S': request['email']},
-                      'name': {'S': request['name']},
-                      'street': {'S': request['street']},
-                      'zipCode': {'N': request['zipCode']},
-                      'city': {'S': request['city']},
-                      'state': {'S': request['state']},
-                      'totalAmount': {'N': request['totalAmount']},
-                      'paid': {'BOOL': request['paid']},
-                      'paymentType': {'S': request['paymentType']},
-                      'deliveryTime': {'S': request['deliveryTime']},
-                      'mealOption1': {'N': request['mealOption1']},
-                      'mealOption2': {'N': request['mealOption2']}
+                      'email': {'S': data['email']},
+                      'name': {'S': data['name']},
+                      'street': {'S': data['street']},
+                      'zipCode': {'N': str(data['zipCode'])},
+                      'city': {'S': data['city']},
+                      'state': {'S': data['state']},
+                      'totalAmount': {'N': str(data['totalAmount'])},
+                      'paid': {'BOOL': data['paid']},
+                      'paymentType': {'S': data['paymentType']},
+                      'deliveryTime': {'S': data['deliveryTime']},
+                      'mealOption1': {'N': str(data['mealOption1'])},
+                      'mealOption2': {'N': str(data['mealOption2'])}
                 }
             )
 
@@ -135,9 +135,32 @@ class MealOrders(Resource):
         except:
             raise BadRequest('Request failed. Please try again later.')
 
+    def get(self):
+        """Returns todays meal orders"""
+        response = {}
+        todays_date = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        try:
+            orders = db.scan(TableName='meal_orders',
+                FilterExpression='order_date = :value',
+                ExpressionAttributeValues={
+                    ':value': {'S': todays_date}
+                }
+            )
+
+            print(orders)
+
+            response['result'] = orders['Items']
+            response['message'] = 'Request successful'
+            return response, 200
+        except:
+            raise BadRequest('Request failed. please try again later.')
+    
+
 
 api.add_resource(MealOrders, '/api/v1/meal/order')
 api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
+
 
 if __name__ == '__main__':
     app.run()
