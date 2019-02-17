@@ -772,11 +772,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.iOS/OrderMeal.iOS.csproj",
+      "projectUniqueName": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.iOS/OrderMeal.iOS.csproj",
       "projectName": "OrderMeal.iOS",
-      "projectPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.iOS/OrderMeal.iOS.csproj",
+      "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.iOS/OrderMeal.iOS.csproj",
       "packagesPath": "/Users/japs/.nuget/packages/",
-      "outputPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.iOS/obj",
+      "outputPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.iOS/obj",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/japs/.config/NuGet/NuGet.Config"
@@ -790,8 +790,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/OrderMeal.csproj": {
-              "projectPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/OrderMeal.csproj"
+            "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj": {
+              "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj"
             }
           }
         }

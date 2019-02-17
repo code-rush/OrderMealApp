@@ -1,5 +1,5 @@
---cache=/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone11.4-12.1/mtouch-cache
---sim=/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.iOS/bin/iPhoneSimulator/Debug/device-builds/iphone11.4-12.1/OrderMeal.iOS.app
+--cache=/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone11.4-12.1/mtouch-cache
+--sim=/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.iOS/bin/iPhoneSimulator/Debug/device-builds/iphone11.4-12.1/OrderMeal.iOS.app
 --executable=OrderMeal.iOS
 --debug
 --nolink
@@ -9,10 +9,10 @@
 --aot-options=-O=-float32
 --http-message-handler=NSUrlSessionHandler
 --abi=x86_64
---symbollist=/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone11.4-12.1/mtouch-symbols.list
+--symbollist=/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.iOS/obj/iPhoneSimulator/Debug/device-builds/iphone11.4-12.1/mtouch-symbols.list
 --dsym=no
 -r=/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS/mscorlib.dll
--r=/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/bin/Debug/netstandard2.0/OrderMeal.dll
+-r=/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/bin/Debug/netstandard2.0/OrderMeal.dll
 -r=/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS/System.Core.dll
 -r=/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS/System.dll
 -r=/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS/System.Xml.dll
@@ -197,7 +197,7 @@
 -r=/Users/japs/.nuget/packages/xamarin.forms/3.2.0.871581/lib/Xamarin.iOS10/zh-Hans/Xamarin.Forms.Platform.iOS.resources.dll
 -r=/Users/japs/.nuget/packages/xamarin.forms/3.2.0.871581/lib/Xamarin.iOS10/zh-Hant/Xamarin.Forms.Platform.iOS.resources.dll
 -r=/Users/japs/.nuget/packages/xamarin.testcloud.agent/0.21.7/lib/Xamarin.iOS/Calabash.dll
--r=/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/bin/Debug/netstandard2.0/OrderMeal.dll
+-r=/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/bin/Debug/netstandard2.0/OrderMeal.dll
 --target-framework=Xamarin.iOS,v1.0
---root-assembly=/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.iOS/bin/iPhoneSimulator/Debug/OrderMeal.iOS.exe
+--root-assembly=/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.iOS/bin/iPhoneSimulator/Debug/OrderMeal.iOS.exe
 

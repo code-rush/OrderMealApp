@@ -12,3 +12,17 @@
 /Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/OrderMeal.pdb
 /Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/SelectMealOptions.xaml.g.cs
 /Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/CheckOutPage.xaml.g.cs
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/bin/Debug/netstandard2.0/OrderMeal.deps.json
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/bin/Debug/netstandard2.0/OrderMeal.dll
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/bin/Debug/netstandard2.0/OrderMeal.pdb
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/OrderMeal.csprojAssemblyReference.cache
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/App.xaml.g.cs
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/CheckOutPage.xaml.g.cs
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/MainPage.xaml.g.cs
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/SelectMealOptions.xaml.g.cs
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/OrderMeal.csproj.CoreCompileInputs.cache
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/OrderMeal.AssemblyInfoInputs.cache
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/OrderMeal.AssemblyInfo.cs
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/XamlC.stamp
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/OrderMeal.dll
+/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj/Debug/netstandard2.0/OrderMeal.pdb

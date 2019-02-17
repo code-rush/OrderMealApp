@@ -349,11 +349,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/OrderMeal.csproj",
+      "projectUniqueName": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj",
       "projectName": "OrderMeal",
-      "projectPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/OrderMeal.csproj",
+      "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj",
       "packagesPath": "/Users/japs/.nuget/packages/",
-      "outputPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/obj",
+      "outputPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

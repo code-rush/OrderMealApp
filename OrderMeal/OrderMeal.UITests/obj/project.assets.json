@@ -158,11 +158,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
+      "projectUniqueName": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
       "projectName": "OrderMeal.UITests",
-      "projectPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
+      "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
       "packagesPath": "/Users/japs/.nuget/packages/",
-      "outputPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.UITests/obj",
+      "outputPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.UITests/obj",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/japs/.config/NuGet/NuGet.Config"

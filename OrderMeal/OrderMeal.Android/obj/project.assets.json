@@ -784,11 +784,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.Android/OrderMeal.Android.csproj",
+      "projectUniqueName": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.Android/OrderMeal.Android.csproj",
       "projectName": "OrderMeal.Android",
-      "projectPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.Android/OrderMeal.Android.csproj",
+      "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.Android/OrderMeal.Android.csproj",
       "packagesPath": "/Users/japs/.nuget/packages/",
-      "outputPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal.Android/obj",
+      "outputPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.Android/obj",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/japs/.config/NuGet/NuGet.Config"
@@ -802,8 +802,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/OrderMeal.csproj": {
-              "projectPath": "/Users/japs/Desktop/OrderMeal/OrderMeal/OrderMeal/OrderMeal.csproj"
+            "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj": {
+              "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj"
             }
           }
         }
