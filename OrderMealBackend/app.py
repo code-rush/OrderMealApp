@@ -2,13 +2,14 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-02-17 14:06:55
+# @Last Modified time: 2019-02-18 08:54:11
 
 
 import os
 import uuid
 import boto3
-import datetime
+from datetime import datetime
+from pytz import timezone
 
 from flask import Flask, request
 from flask_mail import Mail, Message
@@ -90,8 +91,8 @@ class MealOrders(Resource):
         """
         response = {}
         data = request.get_json(force=True)
-        order_date = datetime.datetime.now().strftime("%Y-%m-%d")
-        order_time = datetime.datetime.now().strftime("%H:%M:%S")
+        order_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
+        order_time = datetime.now(tz=timezone('US/Pacific')).strftime("%H:%M:%S")
 
         if data.get('email') == None \
           or data.get('name') == None \
@@ -138,7 +139,7 @@ class MealOrders(Resource):
     def get(self):
         """Returns todays meal orders"""
         response = {}
-        todays_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
 
         try:
             orders = db.scan(TableName='meal_orders',
@@ -147,8 +148,6 @@ class MealOrders(Resource):
                     ':value': {'S': todays_date}
                 }
             )
-
-            print(orders)
 
             response['result'] = orders['Items']
             response['message'] = 'Request successful'
