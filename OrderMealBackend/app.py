@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-02-18 08:54:11
+# @Last Modified time: 2019-02-18 13:30:53
 
 
 import os
@@ -12,23 +12,15 @@ from datetime import datetime
 from pytz import timezone
 
 from flask import Flask, request
-from flask_mail import Mail, Message
 from flask_restful import Resource, Api
 
 from werkzeug.exceptions import BadRequest
 
 app = Flask(__name__)
 
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL')
-app.config['MAIL_PASSWORD'] = os.environ.get('PASSWORD')
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
 app.config['DEBUG'] = False
 
 api = Api(app)
-mail = Mail(app)
 
 
 db = boto3.client('dynamodb')

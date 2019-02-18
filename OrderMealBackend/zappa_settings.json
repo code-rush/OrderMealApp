@@ -7,8 +7,6 @@
         "runtime": "python3.6",
         "s3_bucket": "zappa-4go7axs3l",
         "environment_variables": {
-            "EMAIL": "parikh.japan30@gmail.com",
-            "PASSWORD": "eyed489nice788vibhanujapinakinvallabhdaskanchenhackitifucan",
             "MEAL_IMAGES_BUCKET": "ordermealapp"
         }
     }
