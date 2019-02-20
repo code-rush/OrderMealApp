@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-02-18 13:30:53
+# @Last Modified time: 2019-02-19 20:33:52
 
 
 import os
@@ -13,10 +13,12 @@ from pytz import timezone
 
 from flask import Flask, request
 from flask_restful import Resource, Api
+from flask_cors import CORS
 
 from werkzeug.exceptions import BadRequest
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['DEBUG'] = False
 
