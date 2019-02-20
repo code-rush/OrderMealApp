@@ -17,18 +17,18 @@
             
     <!--        <BoxView BackgroundColor="Blue" Grid.Row="0" HeightRequest="110"/>-->
             <StackLayout Grid.Row="0" Orientation="Vertical" HeightRequest="150" Padding="10">
-                <Entry Placeholder="Full Name" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" HeightRequest="45"/>
-                <Entry Placeholder="Email Address" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" HeightRequest="45"/>
-                <Entry Placeholder="Phone Number" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" Keyboard="Telephone" HeightRequest="45"/>
+                <Entry x:Name="fullName" Placeholder="Full Name" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" HeightRequest="45"/>
+                <Entry x:Name="emailAddress" Placeholder="Email Address" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" HeightRequest="45"/>
+                <Entry x:Name="phoneNumber" Placeholder="Phone Number" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" Keyboard="Telephone" HeightRequest="45"/>
             </StackLayout>
             
 <!--            <BoxView BackgroundColor="Blue" Grid.Row="1" HeightRequest="200"/>-->
             <StackLayout Grid.Row="1" Orientation="Vertical" Padding="10" >
-                <Entry Placeholder="Street Address" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" HeightRequest="45"/>
-                <Entry Placeholder="City" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" HeightRequest="45"/>
+                <Entry x:Name="streetAddress" Placeholder="Street Address" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" HeightRequest="45"/>
+                <Entry x:Name="City" Placeholder="City" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" HeightRequest="45"/>
                 <StackLayout Orientation="Horizontal" HeightRequest="45" HorizontalOptions="FillAndExpand">
-                    <Entry Placeholder="State" WidthRequest="100" />
-                    <Entry Placeholder="Zip Code" Keyboard="Numeric" WidthRequest="100" />
+                    <Entry x:Name="State" Placeholder="State" WidthRequest="100" />
+                    <Entry x:Name="zipCode" Placeholder="Zip Code" Keyboard="Numeric" WidthRequest="100" />
                 </StackLayout>
             </StackLayout>
             
