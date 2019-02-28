@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         
 <!--        <BoxView BackgroundColor="Gray" Grid.Row="0" HeightRequest="250"/>-->
-        <Image Source="pexels-photo-461198.jpeg" Aspect="AspectFill" HeightRequest="250" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Grid.Row="0"/>
+        <Image x:Name ="mealPhoto" Source="pexels-photo-461198.jpeg" Aspect="AspectFill" HeightRequest="250" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Grid.Row="0"/>
         
 <!--        <BoxView BackgroundColor="Navy" Grid.Row="1" />-->
         
@@ -43,7 +43,7 @@
                 <StackLayout Orientation="Vertical">
                     <Label Text="Price per order: $20" FontSize="14"/>
                     <Label Text="Number of orders:"/>
-                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Text="0" TextColor="Silver"/>
+                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>
                 </StackLayout>
                 
             </StackLayout>
@@ -63,7 +63,7 @@
                 <StackLayout Orientation="Vertical">
                     <Label Text="Price per order: $24" FontSize="14"/>
                     <Label Text="Number of orders:"/>
-                <Entry x:Name="optionTwo" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Text="0" TextColor="Silver"/>
+                <Entry x:Name="optionTwo" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>
                 </StackLayout>
                 
             </StackLayout>
