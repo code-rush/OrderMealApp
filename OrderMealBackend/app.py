@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-02-19 20:33:52
+# @Last Modified time: 2019-02-22 19:19:02
 
 
 import os
@@ -65,7 +65,7 @@ class TodaysMealPhoto(Resource):
         file = request.files['image']
         response = {}
 
-        key = 'meal_image'
+        key = datetime.now(tz=timezone('US/Pacific')).strftime("%Y%m%d")
 
         try:
             image_uploaded = upload_file(file, BUCKET_NAME, key)
