@@ -6,8 +6,8 @@
     <!--<ContentPage.Content>
     </ContentPage.Content>-->
     
-    
-    <Grid RowSpacing="0">
+    <ScrollView>
+        <Grid RowSpacing="0">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="AUTO"/>
@@ -40,12 +40,15 @@
                     <Label Text="• Rice"/>
                 </StackLayout>
                 
-                <StackLayout Orientation="Vertical">
-                    <Label Text="Price per order: $20" FontSize="14"/>
-                    <Label Text="Number of orders:"/>
-                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>
-                </StackLayout>
+            </StackLayout>
                 
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Price per order: $20" FontSize="14"/>
+            </StackLayout>
+                
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Number of orders:"/>
+                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>
             </StackLayout>
             
             <Image BackgroundColor="Silver" HeightRequest="0.5"/>
@@ -59,13 +62,16 @@
                     <Label Text="• Daal"/>
                     <Label Text="• 4 Chapatis"/>
                 </StackLayout>
-                
-                <StackLayout Orientation="Vertical">
-                    <Label Text="Price per order: $24" FontSize="14"/>
-                    <Label Text="Number of orders:"/>
+                    
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Price per order: $24" FontSize="14"/>
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Number of orders:"/>
                 <Entry x:Name="optionTwo" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>
-                </StackLayout>
-                
             </StackLayout>
             
         </StackLayout>
@@ -74,6 +80,8 @@
             <Button Text="Proceed to Checkout" Grid.Row="2" HeightRequest="50" BorderColor="Gray" BorderWidth="0.5" x:Name="checkout" Clicked="Handle_Clicked"/>
         </StackLayout>
         
-    </Grid>
+        </Grid>
+    </ScrollView>
+    
     
 </ContentPage>
