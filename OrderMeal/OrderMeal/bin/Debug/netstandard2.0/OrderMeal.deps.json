@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "e0956bf0c07f994ff73842b72c1eb0e2e0b4ac7e"
+    "signature": "fca04f54eaad689c3cd8d8609e1d9131233fb836"
   },
   "compilationOptions": {},
   "targets": {
@@ -10,7 +10,8 @@
       "OrderMeal/1.0.0": {
         "dependencies": {
           "NETStandard.Library": "2.0.3",
-          "Xamarin.Forms": "3.2.0.871581"
+          "Newtonsoft.Json": "12.0.1",
+          "Xamarin.Forms": "3.5.0.169047"
         },
         "runtime": {
           "OrderMeal.dll": {}
@@ -22,7 +23,15 @@
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
       },
-      "Xamarin.Forms/3.2.0.871581": {
+      "Newtonsoft.Json/12.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.1.22727"
+          }
+        }
+      },
+      "Xamarin.Forms/3.5.0.169047": {
         "runtime": {
           "lib/netstandard2.0/Xamarin.Forms.Core.dll": {
             "assemblyVersion": "2.0.0.0",
@@ -60,12 +69,19 @@
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
     },
-    "Xamarin.Forms/3.2.0.871581": {
+    "Newtonsoft.Json/12.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-1yKOnOHYR1v4Afa5XIkpPfdIG3A3Tu0gT5TX4923xG5DV+8dJw+beSPuLagSJoU33NzV023t73R5iSbMoSF7qQ==",
-      "path": "xamarin.forms/3.2.0.871581",
-      "hashPath": "xamarin.forms.3.2.0.871581.nupkg.sha512"
+      "sha512": "sha512-jmVyoEyk0In8r+AObYQyFKVFm7uSRzE0XSHSbEtBJcZDMV6DqJoyB4FLcHwprPVhAh826so0db3DIKXVnpGoPA==",
+      "path": "newtonsoft.json/12.0.1",
+      "hashPath": "newtonsoft.json.12.0.1.nupkg.sha512"
+    },
+    "Xamarin.Forms/3.5.0.169047": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ybupzRr8C93lEDyeCI4am3XTervm+4nhBVdb8StYS/ZRLQdvjrGyKkAonz/TGbz7Sjln05KDWwQts4moE9HUgg==",
+      "path": "xamarin.forms/3.5.0.169047",
+      "hashPath": "xamarin.forms.3.5.0.169047.nupkg.sha512"
     }
   }
 }
