@@ -1,19 +1,19 @@
 ﻿<Properties StartupConfiguration="{22BD34F7-6343-401F-B295-955336A1289E}|Default">
-  <MonoDevelop.Ide.ItemProperties.OrderMeal.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.AFEE7F6F-19C0-47F8-9CC7-5ED5D91EFB12" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="OrderMeal.iOS/Info.plist">
+  <MonoDevelop.Ide.ItemProperties.OrderMeal.iOS automaticSigning="False" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.2f4d0a803b467e42a47e520bf020753851160c51" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="OrderMeal/CheckOutPage.xaml">
     <Files>
       <File FileName="OrderMeal/SelectMealOptions.xaml" Line="88" Column="1" />
       <File FileName="OrderMeal/SelectMealOptions.xaml.cs" Line="21" Column="6" />
-      <File FileName="OrderMeal/CheckOutPage.xaml" Line="86" Column="1" />
+      <File FileName="OrderMeal/CheckOutPage.xaml" Line="79" Column="74" />
       <File FileName="OrderMeal/CheckOutPage.xaml.cs" Line="125" Column="1" />
       <File FileName="OrderMeal/MainPage.xaml" Line="10" Column="15" />
       <File FileName="OrderMeal/MainPage.xaml.cs" Line="1" Column="1" />
       <File FileName="OrderMeal.iOS/Info.plist" />
-      <File FileName="OrderMeal.iOS/AppDelegate.cs" Line="31" Column="6" />
+      <File FileName="OrderMeal.iOS/AppDelegate.cs" Line="25" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|iPhone" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
