@@ -2,11 +2,25 @@
 <html>
 <head>
 	<title>Order Report</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="ordermeal.js"></script>
 </head>
 <body>
-	<h1> Leena's Kitchen </h1>
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  		<a class="navbar-brand" href="index.html">Leena's Kitchen</a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    		<span class="navbar-toggler-icon"></span>
+  		</button>
+  		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    		<div class="navbar-nav">
+      			<a class="nav-item nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+      			<a class="nav-item nav-link active" href="#">Report</a>
+  			</div>
+  		</div>
+	</nav>
+
 	<h2> Today's Meal: </h2>
 	<!-- GET Request to Photo -->
 	<br><br>
