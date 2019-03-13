@@ -12,7 +12,7 @@ namespace OrderMeal
     {
         public string email = "amanag96@gmail.com";
         public string name = "Aman Agrawal";
-        //public string phone = "4088130108";
+        public string phone = "4088130108";
         public string street = "212 Test Drive";
         public string city = "San Jose";
         public string state = "CA";
@@ -23,8 +23,8 @@ namespace OrderMeal
         public string deliveryTime = "5:00 PM";
         public string mealOption1 = "1";
         public string mealOption2 = "1";
-
     }
+
     public partial class CheckOutPage : ContentPage
     {
         OrderInfo currentOrder = new OrderInfo();
@@ -73,7 +73,12 @@ namespace OrderMeal
                 Application.Current.Properties["email"] = emailAddress.Text;
                 currentOrder.email = emailAddress.Text;
             }
-            if (phoneNumber.Text != null) { Application.Current.Properties["phone"] = phoneNumber.Text; }
+
+            if (phoneNumber.Text != null) {
+                Application.Current.Properties["phone"] = phoneNumber.Text;
+                currentOrder.phone = phoneNumber.Text;
+            }
+
             if (streetAddress.Text != null)
             {
                 Application.Current.Properties["street"] = streetAddress.Text;
@@ -95,7 +100,7 @@ namespace OrderMeal
                 currentOrder.zipCode = zipCode.Text;
             }
             Application.Current.SavePropertiesAsync();
-            currentOrder.deliveryTime = deliveryTime.Time.ToString();
+            //currentOrder.deliveryTime = deliveryTime.Time.ToString();
             
             Send(currentOrder);
         }

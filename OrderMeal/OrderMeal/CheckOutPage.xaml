@@ -41,7 +41,7 @@
                     <Label Text="Option One meal orders" FontSize="12"/>
                     <Label Text="Option Two meal orders" FontSize="12"/>
                     <Label Text="Tax" FontSize="12"/>
-                    <Label Text="Delivery Fee" FontSize="12" />
+                    <!--<Label Text="Delivery Fee" FontSize="12" />-->
                     <Label Text="Total Amount" FontSize="14" FontAttributes="Bold"/>
                 </StackLayout>
                 
@@ -59,9 +59,9 @@
                     <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                         <Label x:Name="Tax" Text="$ 0" FontSize="12" />
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <!--<StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                         <Label x:Name="DeliverFee" Text="$ 5.00" FontSize="12" />
-                    </StackLayout>
+                    </StackLayout>-->
                     <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                         <Label x:Name="TotalPrice" Text="$ 0" FontSize="14" FontAttributes="Bold" />
                     </StackLayout>
@@ -69,15 +69,15 @@
                 
             </StackLayout>
             
-            <StackLayout Grid.Row="2" Orientation="Horizontal" Margin="10">
+            <!--<StackLayout Grid.Row="2" Orientation="Horizontal" Margin="10">
                 <Label Text="Preferred time for delivery:" />
                 <TimePicker x:Name="deliveryTime" HorizontalOptions="EndAndExpand" />
-            </StackLayout>
+            </StackLayout>-->
             
             <StackLayout Grid.Row="5" Padding="10" Orientation="Vertical">
-                <Button Text="Checkout with PayPal" HeightRequest="30" WidthRequest="30" BorderColor="Gray" BorderWidth="0.5" Clicked="PayPal_Request"/>
-                <Label Text="-- OR --" HorizontalTextAlignment="Center"/>
-                <Button Text="Pay cash on delivery" HeightRequest="30" WidthRequest="30" BorderColor="Gray" BorderWidth="0.5" Clicked="Handle_Clicked"/>
+<!--                <Button Text="Checkout with PayPal" HeightRequest="30" WidthRequest="30" BorderColor="Gray" BorderWidth="0.5" Clicked="PayPal_Request"/>-->
+<!--                <Label Text="" HorizontalTextAlignment="Center"/>-->
+                <Button Text="Pay cash on pick up" HeightRequest="30" WidthRequest="30" BorderColor="Gray" BorderWidth="0.5" Clicked="Handle_Clicked"/>
             </StackLayout>
             
         </Grid>

@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-02-22 19:19:02
+# @Last Modified time: 2019-03-12 20:56:46
 
 
 import os
@@ -97,9 +97,9 @@ class MealOrders(Resource):
           or data.get('totalAmount') == None \
           or data.get('paid') == None \
           or data.get('paymentType') == None \
-          or data.get('deliveryTime') == None \
           or data.get('mealOption1') == None \
-          or data.get('mealOption2') == None:
+          or data.get('mealOption2') == None \
+          or data.get('phone') == None:
             raise BadRequest('Request failed. Please provide all \
                               required information.')
 
@@ -119,9 +119,9 @@ class MealOrders(Resource):
                       'totalAmount': {'N': str(data['totalAmount'])},
                       'paid': {'BOOL': data['paid']},
                       'paymentType': {'S': data['paymentType']},
-                      'deliveryTime': {'S': data['deliveryTime']},
                       'mealOption1': {'N': str(data['mealOption1'])},
-                      'mealOption2': {'N': str(data['mealOption2'])}
+                      'mealOption2': {'N': str(data['mealOption2'])},
+                      'phone': {'S': str(data['phone'])}
                 }
             )
 

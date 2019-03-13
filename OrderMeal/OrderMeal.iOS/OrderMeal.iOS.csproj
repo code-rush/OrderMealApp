@@ -147,6 +147,8 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\icon_60pt%402x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\IconTL20pt2x.png" />
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\IconTL40pt2x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\IconTL29pt2x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -155,8 +157,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
-    <PackageReference Include="Xamarin.TestCloud.Agent" Version="0.21.7" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.220655" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
