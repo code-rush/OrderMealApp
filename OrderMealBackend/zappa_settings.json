@@ -8,8 +8,8 @@
         "s3_bucket": "zappa-4go7axs3l",
         "environment_variables": {
             "MEAL_IMAGES_BUCKET": "ordermealapp",
-            "EMAIL": "parikh.japan30@gmail.com",
-            "PASSWORD": "eyed489nice788vibhanujapinakinvallabhdaskanchenhackitifucan"
+            "EMAIL": "YOUR EMAIL",
+            "PASSWORD": "YOUR PASSWORD"
         }
     }
 }
