@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-03-12 20:56:46
+# @Last Modified time: 2019-03-14 18:51:25
 
 
 import os
@@ -11,17 +11,26 @@ import boto3
 from datetime import datetime
 from pytz import timezone
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_restful import Resource, Api
 from flask_cors import CORS
+from flask_mail import Mail, Message
 
 from werkzeug.exceptions import BadRequest
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='assets')
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+app.config['MAIL_USERNAME'] = os.environ.get('EMAIL')
+app.config['MAIL_PASSWORD'] = os.environ.get('PASSWORD')
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 app.config['DEBUG'] = False
 
+
+mail = Mail(app)
 api = Api(app)
 
 
@@ -57,7 +66,7 @@ def allowed_file(filename):
     """Checks if the file is allowed to upload"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# ===========================================================
+# ===========================================================  
 
 class TodaysMealPhoto(Resource):
     def post(self):
@@ -124,6 +133,13 @@ class MealOrders(Resource):
                       'phone': {'S': str(data['phone'])}
                 }
             )
+            
+            msg = Message(subject='Order Confirmation',
+                          sender=os.environ.get('EMAIL'),
+                          html=render_template('emailTemplate.html'),
+                          recipients=[data['email']])
+
+            mail.send(msg)
 
             response['message'] = 'Request successful'
             return response, 200
