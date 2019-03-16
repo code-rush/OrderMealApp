@@ -49,8 +49,17 @@
                 
             <StackLayout Orientation="Horizontal">
                 <Label Text="Number of orders:"/>
-                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>
+                <Label Text="" x:Name="optionOneLabel"/>
+<!--                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>-->
             </StackLayout>
+            
+            
+            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="Center">
+                <Button Text="-" HorizontalOptions="StartAndExpand" HeightRequest="30" WidthRequest="30" Clicked="reduceOrdersForMealOptionOne"/>
+                <Slider x:Name="optioneOneSlider" Minimum="0" Maximum="10" HorizontalOptions="CenterAndExpand" WidthRequest="200" ValueChanged="updateOrdersForMealOptionOne"/>
+                <Button Text="+" HorizontalOptions="EndAndExpand" HeightRequest="30" WidthRequest="30" Clicked="addOrdersForMealOptionOne"/>
+            </FlexLayout>
+            
             
             <Image BackgroundColor="Silver" HeightRequest="0.5"/>
             
@@ -72,8 +81,15 @@
             
             <StackLayout Orientation="Horizontal">
                 <Label Text="Number of orders:"/>
-                <Entry x:Name="optionTwo" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>
+                <Label Text="" x:Name="optionTwoLabel"/>
+<!--                <Entry x:Name="optionTwo" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>-->
             </StackLayout>
+            
+            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="Center">
+                <Button Text="-" HorizontalOptions="StartAndExpand" HeightRequest="30" WidthRequest="30" Clicked="reduceOrdersForMealOptionTwo"/>
+                <Slider x:Name="optioneTwoSlider" Minimum="0" Maximum="10" HorizontalOptions="CenterAndExpand" WidthRequest="200" ValueChanged="updateOrdersForMealOptionTwo"/>
+                <Button Text="+" HorizontalOptions="EndAndExpand" HeightRequest="30" WidthRequest="30" Clicked="addOrdersForMealOptionTwo"/>
+            </FlexLayout>
             
         </StackLayout>
         
