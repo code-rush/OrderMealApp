@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-03-14 18:51:25
+# @Last Modified time: 2019-03-14 19:25:12
 
 
 import os
@@ -113,6 +113,9 @@ class MealOrders(Resource):
                               required information.')
 
         order_id = uuid.uuid4().hex
+        mealOption1 = data['mealOption1']
+        mealOption2 = data['mealOption2']
+        totalAmount = data['totalAmount']
 
         try:
             add_order = db.put_item(TableName='meal_orders',
@@ -125,18 +128,20 @@ class MealOrders(Resource):
                       'zipCode': {'N': str(data['zipCode'])},
                       'city': {'S': data['city']},
                       'state': {'S': data['state']},
-                      'totalAmount': {'N': str(data['totalAmount'])},
+                      'totalAmount': {'N': str(totalAmount)},
                       'paid': {'BOOL': data['paid']},
                       'paymentType': {'S': data['paymentType']},
-                      'mealOption1': {'N': str(data['mealOption1'])},
-                      'mealOption2': {'N': str(data['mealOption2'])},
+                      'mealOption1': {'N': str(mealOption1)},
+                      'mealOption2': {'N': str(mealOption2)},
                       'phone': {'S': str(data['phone'])}
                 }
             )
             
             msg = Message(subject='Order Confirmation',
                           sender=os.environ.get('EMAIL'),
-                          html=render_template('emailTemplate.html'),
+                          html=render_template('emailTemplate.html',
+                               option1=mealOption1, option2=mealOption2,
+                               totalAmount=totalAmount),
                           recipients=[data['email']])
 
             mail.send(msg)
