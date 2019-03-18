@@ -56,10 +56,12 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "a/iSwnRZb+LHFk49hQOyThh/ZNC3vsbZsF65XwQIb863qF6msmhdQtxGXFL28Ob2NsCz/drEj28BJd/YPpLRBg==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -405,23 +407,23 @@
     ]
   },
   "packageFolders": {
-    "/Users/japs/.nuget/packages/": {},
+    "/Users/amanagrawal/.nuget/packages/": {},
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj",
+      "projectUniqueName": "/Users/amanagrawal/Desktop/test/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj",
       "projectName": "OrderMeal",
-      "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj",
-      "packagesPath": "/Users/japs/.nuget/packages/",
-      "outputPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal/obj",
+      "projectPath": "/Users/amanagrawal/Desktop/test/OrderMealApp/OrderMeal/OrderMeal/OrderMeal.csproj",
+      "packagesPath": "/Users/amanagrawal/.nuget/packages/",
+      "outputPath": "/Users/amanagrawal/Desktop/test/OrderMealApp/OrderMeal/OrderMeal/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/japs/.config/NuGet/NuGet.Config"
+        "/Users/amanagrawal/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"

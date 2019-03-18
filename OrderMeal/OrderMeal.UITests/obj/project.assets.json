@@ -154,19 +154,20 @@
     ]
   },
   "packageFolders": {
-    "/Users/japs/.nuget/packages/": {}
+    "/Users/amanagrawal/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
+      "projectUniqueName": "/Users/amanagrawal/Desktop/test/OrderMealApp/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
       "projectName": "OrderMeal.UITests",
-      "projectPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
-      "packagesPath": "/Users/japs/.nuget/packages/",
-      "outputPath": "/Users/japs/Documents/OrderMealApp/OrderMeal/OrderMeal.UITests/obj",
+      "projectPath": "/Users/amanagrawal/Desktop/test/OrderMealApp/OrderMeal/OrderMeal.UITests/OrderMeal.UITests.csproj",
+      "packagesPath": "/Users/amanagrawal/.nuget/packages/",
+      "outputPath": "/Users/amanagrawal/Desktop/test/OrderMealApp/OrderMeal/OrderMeal.UITests/obj/",
       "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
       "configFilePaths": [
-        "/Users/japs/.config/NuGet/NuGet.Config"
+        "/Users/amanagrawal/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net461"
