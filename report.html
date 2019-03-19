@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="ordermeal.js"></script>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<!-- Navigation Bar -->
@@ -20,20 +21,85 @@
   			</div>
   		</div>
 	</nav>
-
-	<h2> Today's Meal: </h2>
-	<!-- GET Request to Photo -->
+	<div id="report">
+	<h3> Today's Meal: </h3>
+	<div id="img"></div>
 	<br><br>
+	<h3> Inventory Report </h3>
 	<div id="inventory">
-		<h2> Inventory Report </h2>
-		<strong><p id="num_orders"></p></strong>
-		<p id="num_daal"></p>
-		<p id="num_bhaji"></p>
-		<p id="num_chapati"></p>
-		<p id="num_rice"></p>
-	</div>
-	<h2> Delivery Report </h2>
-	<div id="delivery"></div>
+  			<!-- <dt class="col-sm-2">Total Orders</dt>
+  			<dd class="col-sm-10" id="num_orders"></dd>
+			
+			<dt class="col-sm-2">Option 1</dt>
+  			<dd class="col-sm-10" id="num_one"></dd>
 
+  			<dt class="col-sm-2">Option 2</dt>
+  			<dd class="col-sm-10" id="num_two"></dd> -->
+		<table class="table table-hover table-responsive">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Component</th>
+					<th scope="col">Option 1</th>
+					<th scope="col">Option 2</th>
+					<th scope="col">Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">Qty Ordered</th>
+					<th id="op1_total"></th>
+					<th id="op2_total"></th>
+					<th id="kitchen_total"></th>
+				</tr>
+				<tr>
+					<th scope="row">Daal</th>
+					<td id="daal_1"></td>
+					<td id="daal_2"></td>
+					<td id="daal_total"></td>
+				</tr>
+				<tr>
+					<th scope="row">Bhaji</th>
+					<td id="bhaji_1"></td>
+					<td id="bhaji_2"></td>
+					<td id="bhaji_total"></td>
+				</tr>
+				<tr>
+					<th scope="row">Chapatis</th>
+					<td id="chapati_1"></td>
+					<td id="chapati_2"></td>
+					<td id="chapati_total"></td>
+				</tr>
+				<tr>
+					<th scope="row">Rice</th>
+					<td id="rice_1"></td>
+					<td id="rice_2"></td>
+					<td id="rice_total"></td>
+				</tr>
+				<tr>
+					<th scope="row">Cost Total</th>
+					<th id="op1_cost"></th>
+					<th id="op2_cost"></th>
+					<th id="kitchen_cost"></th>
+				</tr>
+			</tbody>
+		</table>
+			<!-- 
+
+  			<dt class="col-sm-2">Daal</dt>
+  			<dd class="col-sm-10" id="num_daal"></dd>
+
+  			<dt class="col-sm-2">Bhaji</dt>
+  			<dd class="col-sm-10" id="num_bhaji"></dd>
+
+  			<dt class="col-sm-2">Chapatis</dt>
+  			<dd class="col-sm-10" id="num_chapati"></dd>
+
+  			<dt class="col-sm-2">Rice</dt>
+  			<dd class="col-sm-10" id="num_rice"></dd> -->
+	</div>
+	<br><br>
+	<h3> Order Information </h3>
+	<div id="delivery" class="row"></div>
+</div>
 </body>
 </html>
