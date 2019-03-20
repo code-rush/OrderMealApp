@@ -30,67 +30,39 @@
         
         <StackLayout Grid.Row="1" Orientation="Vertical">
             
-            <StackLayout Orientation="Horizontal"  Padding="15">
-                
-                <Label Text="Option One:" Grid.Row="1"/>
-                
-                <StackLayout Orientation="Vertical">
-                    <Label Text="• Bhaji"/>
-                    <Label Text="• Daal"/>
-                    <Label Text="• 2 Chapatis"/>
-                    <Label Text="• Rice"/>
+            <StackLayout x:Name="op1" Orientation="Vertical" HorizontalOptions="FillAndExpand" Padding="10">
+                <Label x:Name="op1Title" HorizontalTextAlignment="Center" Text="Option One" Grid.Row="1" FontSize="18"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label x:Name="op1c1" HorizontalOptions="StartAndExpand" Text="Bhaji"/>
+                    <Label x:Name="op1Price" HorizontalOptions="EndAndExpand" Text="$20" FontSize="20"/>
                 </StackLayout>
-                
-            </StackLayout>
-                
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Price per order: $20" FontSize="14"/>
-            </StackLayout>
-                
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Number of orders:"/>
-                <Label Text="" x:Name="optionOneLabel"/>
-<!--                <Entry x:Name="optionOne" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>-->
-            </StackLayout>
-            
-            
-            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="Center">
-                <Button Text="-" HorizontalOptions="StartAndExpand" HeightRequest="30" WidthRequest="30" Clicked="reduceOrdersForMealOptionOne"/>
-                <Slider x:Name="optioneOneSlider" Minimum="0" Maximum="10" HorizontalOptions="CenterAndExpand" WidthRequest="200" ValueChanged="updateOrdersForMealOptionOne"/>
-                <Button Text="+" HorizontalOptions="EndAndExpand" HeightRequest="30" WidthRequest="30" Clicked="addOrdersForMealOptionOne"/>
-            </FlexLayout>
+                <Label x:Name="op1c2" HorizontalOptions="StartAndExpand" Text="Daal"/>
+                <Label x:Name="op1c3" HorizontalOptions="StartAndExpand" Text="2 Chapatis"/>
+                <Label x:Name="op1c4" HorizontalOptions="StartAndExpand" Text="Rice"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button Text="-" HorizontalOptions="CenterAndExpand" HeightRequest="30" BorderColor="Gray" BorderWidth="0.5" WidthRequest="30" Clicked="reduceOrdersForMealOptionOne"/>
+                    <Entry x:Name="op1qty" Text="0" Placeholder="0" HorizontalOptions="CenterAndExpand" HeightRequest="30" WidthRequest="30"/>
+                    <Button Text="+" HorizontalOptions="CenterAndExpand" HeightRequest="30" BorderColor="Gray" BorderWidth="0.5" WidthRequest="30" Clicked="addOrdersForMealOptionOne"/>                
+                </StackLayout>
+                    </StackLayout>
             
             
             <Image BackgroundColor="Silver" HeightRequest="0.5"/>
             
-            <StackLayout Orientation="Horizontal" Padding="15">
-                
-                <Label Text="Option Two:" Grid.Row="1"/>
-                
-                <StackLayout Orientation="Vertical">
-                    <Label Text="• Bhaji"/>
-                    <Label Text="• Daal"/>
-                    <Label Text="• 4 Chapatis"/>
+            <StackLayout x:Name="op2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Padding="10">
+                <Label x:Name="op2Title" HorizontalTextAlignment="Center" Text="Option Two" Grid.Row="1" FontSize="18"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label x:Name="op2c1" HorizontalOptions="StartAndExpand" Text="Bhaji"/>
+                    <Label x:Name="op2Price" HorizontalOptions="EndAndExpand" Text="$24" FontSize="20"/>
                 </StackLayout>
-                    
+                <Label x:Name="op2c2" HorizontalOptions="StartAndExpand" Text="Daal"/>
+                <Label x:Name="op2c3" HorizontalOptions="StartAndExpand" Text="4 Chapatis"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button Text="-" HorizontalOptions="CenterAndExpand" HeightRequest="30" BorderColor="Gray" BorderWidth="0.5" WidthRequest="30" Clicked="reduceOrdersForMealOptionTwo"/>
+                    <Entry x:Name="op2qty" Text="0" Placeholder="0" HorizontalOptions="CenterAndExpand" HeightRequest="30" WidthRequest="30"/>
+                    <Button Text="+" HorizontalOptions="CenterAndExpand" HeightRequest="30" BorderColor="Gray" BorderWidth="0.5" WidthRequest="30" Clicked="addOrdersForMealOptionTwo"/>                
+                </StackLayout>
             </StackLayout>
-            
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Price per order: $24" FontSize="14"/>
-            </StackLayout>
-            
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Number of orders:"/>
-                <Label Text="" x:Name="optionTwoLabel"/>
-<!--                <Entry x:Name="optionTwo" HorizontalOptions="Center" WidthRequest="50" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="0" TextColor="Silver"/>-->
-            </StackLayout>
-            
-            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="Center">
-                <Button Text="-" HorizontalOptions="StartAndExpand" HeightRequest="30" WidthRequest="30" Clicked="reduceOrdersForMealOptionTwo"/>
-                <Slider x:Name="optioneTwoSlider" Minimum="0" Maximum="10" HorizontalOptions="CenterAndExpand" WidthRequest="200" ValueChanged="updateOrdersForMealOptionTwo"/>
-                <Button Text="+" HorizontalOptions="EndAndExpand" HeightRequest="30" WidthRequest="30" Clicked="addOrdersForMealOptionTwo"/>
-            </FlexLayout>
-            
         </StackLayout>
         
         <StackLayout Grid.Row="2" Padding="40">

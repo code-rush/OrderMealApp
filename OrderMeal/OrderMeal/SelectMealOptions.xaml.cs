@@ -17,8 +17,8 @@ namespace OrderMeal
         {
             InitializeComponent();
 
-            optionOneLabel.Text = optionOneMealOrders.ToString();
-            optionTwoLabel.Text = optionTwoMealOrders.ToString();
+            op1qty.Text = optionOneMealOrders.ToString();
+            op2qty.Text = optionTwoMealOrders.ToString();
 
             getimg();
         }
@@ -41,12 +41,12 @@ namespace OrderMeal
             if (optionOneMealOrders > 0)
             {
                 optionOneMealOrders = optionOneMealOrders - 1;
-                optioneOneSlider.Value = (double)optionOneMealOrders;
-                optionOneLabel.Text = optionOneMealOrders.ToString();
+                op1qty.Text = optionOneMealOrders.ToString();
+                op1Price.Text = "$" + (optionOneMealOrders * 20).ToString();
             }
             else
             {
-                optionOneLabel.Text = optionOneMealOrders.ToString();
+                op1qty.Text = optionOneMealOrders.ToString();
             }
         }
 
@@ -55,19 +55,19 @@ namespace OrderMeal
             if (optionOneMealOrders < 10)
             {
                 optionOneMealOrders = optionOneMealOrders + 1;
-                optioneOneSlider.Value = (double)optionOneMealOrders;
-                optionOneLabel.Text = optionOneMealOrders.ToString();
+                op1qty.Text = optionOneMealOrders.ToString();
+                op1Price.Text = "$" + (optionOneMealOrders * 20).ToString();
             }
             else
             {
-                optionOneLabel.Text = optionOneMealOrders.ToString();
+                op1qty.Text = optionOneMealOrders.ToString();
             }
         }
 
         private void updateOrdersForMealOptionOne(object sender, ValueChangedEventArgs e)
         {
             optionOneMealOrders = (int)e.NewValue;
-            optionOneLabel.Text = optionOneMealOrders.ToString();
+            op1qty.Text = optionOneMealOrders.ToString();
         }
 
         private void reduceOrdersForMealOptionTwo(object sender, System.EventArgs e)
@@ -75,12 +75,12 @@ namespace OrderMeal
             if (optionTwoMealOrders > 0)
             {
                 optionTwoMealOrders = optionTwoMealOrders - 1;
-                optioneTwoSlider.Value = (double)optionTwoMealOrders;
-                optionTwoLabel.Text = optionTwoMealOrders.ToString();
+                op2qty.Text = optionTwoMealOrders.ToString();
+                op2Price.Text = "$" + (optionTwoMealOrders * 24).ToString();
             }
             else
             {
-                optionTwoLabel.Text = optionTwoMealOrders.ToString();
+                op2qty.Text = optionTwoMealOrders.ToString();
             }
         }
 
@@ -89,19 +89,19 @@ namespace OrderMeal
             if (optionTwoMealOrders < 10)
             {
                 optionTwoMealOrders = optionTwoMealOrders + 1;
-                optioneTwoSlider.Value = (double)optionTwoMealOrders;
-                optionTwoLabel.Text = optionTwoMealOrders.ToString();
+                op2qty.Text = optionTwoMealOrders.ToString();
+                op2Price.Text = "$" + (optionTwoMealOrders * 24).ToString();
             }
             else
             {
-                optionTwoLabel.Text = optionTwoMealOrders.ToString();
+                op2qty.Text = optionTwoMealOrders.ToString();
             }
         }
 
         private void updateOrdersForMealOptionTwo(object sender, ValueChangedEventArgs e)
         {
             optionTwoMealOrders = (int)e.NewValue;
-            optionTwoLabel.Text = optionTwoMealOrders.ToString();
+            op2qty.Text = optionTwoMealOrders.ToString();
         }
 
         //leaving this function here for the meal photo GET request
