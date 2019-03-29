@@ -1,42 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<title></title>
 </head>
 <body>
-	<div>
-		Congratulations! Your meal is being prepared.
-	</div>
-	<div>
-		<p>Order Details</p>
-		<table>
-			<tr>
-				1x
-			</tr>
-			<tr>
-				meal option 1
-			</tr>
-			<tr>
-				$ 20
-			</tr>
-			<tr>
-				1x
-			</tr>
-			<tr>
-				meal option 2
-			</tr>
-			<tr>
-				$ 24
-			</tr>
-			<tr>
-				Total
-			</tr>
-			<tr></tr>
-			<tr>
-				$ {{totalAmount}}
-			</tr>
-			
-		</table>
+	<style>
+ 		.card {
+ 			border:none;
+
+ 		}
+ 		.nav {
+ 			background: #2C9C91;
+ 			color: white;
+ 			height: 10%;
+ 			border-radius: 0.25em;
+ 			line-height: 1.0;
+ 		}
+ 		#infinite_meals {
+ 			margin-top: 0.75rem;
+ 		}
+
+	</style>
+	<div class="container">
+	  <div class="row">
+	    <div class="col">
+	    </div>
+	    <div class="col-8">
+	      	<ul class="nav justify-content-center">
+			  <li class="nav-item">
+			    <h2 id="infinite_meals">Infinite Meals</h2>
+			  </li>
+			</ul><br>
+			<h2>Hello, {{name}} </h2>
+			<div class="card">
+			  <div class="card-body">
+			    Your order from <strong>Leena's Kitchen</strong> is being prepared. It should be available for pickup after <strong>5:30PM</strong>
+			  </div>
+			</div>
+			<br>
+			<h4>Your Order</h4>
+			<div class="card">
+				<div class="card-body">
+					 <div class="row">
+	    				<div class="col-sm">
+	    					<strong>Item</strong><br>
+	    					Option 1<br>
+	    					Option 2<br>
+	    					<strong>Total</strong>
+	    				</div>
+	    				<div class="col-sm">
+	    					<strong>Quantity</strong><br>
+	    					{{mealOption1}}<br>
+	    					{{mealOption2}}<br>
+	    					<strong>(w/ Tax)</strong>
+	    				</div>
+	    				<div class="col-sm">
+	    					<strong>Cost</strong><br>
+	    					$20<br>
+	    					$24<br>
+	    					<strong>{{totalAmount}}</strong>
+	    				</div>
+	    			</div>
+				</div>
+			</div>
+			<br>
+			<h4>Pickup Information</h4>
+			<div class="card">
+				<div class="card-body">
+					Pickup for {{name}} at Leena's Kitchen
+					<div class="card-body">
+						6123 Corte De La Reina<br>
+						San Jose, CA<br>
+						(408)XXX-XXXX
+					</div>
+					Thank you for ordering with Leena's Kitchen. See you soon!
+				</div>
+			</div>
+	    </div>
+	    <div class="col">
+	    </div>
+	  </div>
 	</div>
 </body>
 </html>
