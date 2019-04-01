@@ -20,7 +20,10 @@ namespace OrderMeal
             op1qty.Text = optionOneMealOrders.ToString();
             op2qty.Text = optionTwoMealOrders.ToString();
 
-            getimg();
+            GetImage();
+
+            //Closes kitchen between 2pm & 8am
+            Check_Kitchen_Hours();
         }
 
         async void Handle_Clicked(object sender, System.EventArgs e)
@@ -105,7 +108,7 @@ namespace OrderMeal
         }
 
         //leaving this function here for the meal photo GET request
-        async Task getimg()
+        async Task GetImage()
         {
             string uri = createUrl();
 
@@ -128,6 +131,15 @@ namespace OrderMeal
 
             string url = "https://s3-us-west-2.amazonaws.com/ordermealapp/" + today;
             return url;
+        }
+        public async void Check_Kitchen_Hours()
+        {
+            DateTime currentTime = DateTime.Now;
+
+            if (currentTime.Hour >= 14 && currentTime.Hour <= 8)
+            {
+                checkout.IsEnabled = false;
+            }
         }
     }
 }
