@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-09 21:31:19
+# @Last Modified time: 2019-04-09 21:38:43
 
 
 import os
@@ -17,6 +17,8 @@ from flask_cors import CORS
 from flask_mail import Mail, Message
 
 from werkzeug.exceptions import BadRequest
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
 
 app = Flask(__name__, template_folder='assets')
 cors = CORS(app, resources={r'/api/*': {'origins': '*'}})
