@@ -150,7 +150,7 @@ class MealOrders(Resource):
                       'totalAmount': {'N': str(totalAmount)},
                       'paid': {'BOOL': data['paid']},
                       'paymentType': {'S': data['paymentType']},
-                      'mealOption1': {'N': str(mealOption1)},
+                      'mealOption1': {'N': str(mealOption1)},    # order_items [{"meal_id":"qty"},........]
                       'mealOption2': {'N': str(mealOption2)},
                       'phone': {'S': str(data['phone'])}
                 }
@@ -288,32 +288,17 @@ class Meals(Resource):
 
     def get(self, kitchen_id):
         response = {}
-
-        try:
-            #TODO1: use scan or query method to scan through the meals table using the kitchen id
-            #      and use filterExpression to filter data using timestamp by today's date
-
-            response['message'] = 'Request successful'
-            # response['result'] = #TODO2: send the value of Items key from the response
-            return response, 200
-        except:
-            raise BadRequest('Request failed. Please try again later.')
-
-
-class MealOrdersForKitchen(Resource):
-    def get(self, kitchen_id):
-        response = {}
-        #TODO1: get todays date
+        # TODO1: get todays date
         todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
         try:
-            #TODO2: scan through the orders table and filter orders by the kitchen id and by today's date
+            # TODO2: scan through the orders table and filter orders by the kitchen id and by today's date
             meals = db.scan(TableName='meals',
-                             FilterExpression= 'kitchen_id = :value and (contains(created_at, :x1))',
-                             ExpressionAttributeValues={
-                                 ':value': {'S': kitchen_id},
-                                ':x1':{'S': todays_date}
-                             }
-            )
+                            FilterExpression='kitchen_id = :value and (contains(created_at, :x1))',
+                            ExpressionAttributeValues={
+                                ':value': {'S': kitchen_id},
+                                ':x1': {'S': todays_date}
+                            }
+                            )
             response['message'] = 'Request successful!'
             response['result'] = meals['Items']
             print(response)
@@ -322,11 +307,14 @@ class MealOrdersForKitchen(Resource):
             raise BadRequest('Request failed. Please try again later.')
 
 
+
+
+
+
 api.add_resource(MealOrders, '/api/v1/meal/order')
 api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
 api.add_resource(RegisterKitchen, '/api/v1/infinitemeals/kitchens/register')
-api.add_resource(MealOrdersForKitchen, '/api/v1/infinitemeals/meals/get_meals/<string:kitchen_id>')
-
+api.add_resource(Meals, '/api/v1/meals/<string:kitchen_id>')
 
 
 if __name__ == '__main__':
