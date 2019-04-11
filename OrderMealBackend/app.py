@@ -249,21 +249,27 @@ class RegisterKitchen(Resource):
             raise BadRequest('Request failed. Please try again later.')
 
 
-# class Kitchens(Resource):
-#     def get(self):
-#         """Returns all kitchens"""
-#         response = {}
+class Kitchens(Resource):
+    def get(self):
+        """Returns all kitchens"""
+        response = {}
 
-#         try:
-#             #TODO1: use scan table method to scan through the kitchens table and
-#             #      and use filterExpression to filter kitchens that are open today.
-#             #      The key to filter kitchens that are open is "isOpen" and the value its BOOL
 
-#             response['message'] = 'Request successful'
-#             response['result'] = #TODO2: send the values of Items key from the response
-#             return response, 200
-#         except:
-#             raise BadRequest('Request failed. Please try again later.')
+        try:
+
+            openkitchens = db.scan(TableName='kitchens',
+                               FilterExpression='isOpen = :value',
+                               ExpressionAttributeValues={
+                                   ':value': {'BOOL': True}
+                               })
+
+            response['message'] = 'Request successful'
+            response['result'] = openkitchens['Items']
+            print(openkitchens)
+            return response, 200
+        except Exception as e:
+            print(e)
+            raise BadRequest('Request failed. Please try again later.')
 
 
 # class Meals(Resource):
@@ -322,6 +328,7 @@ class OrderReport(Resource):
 api.add_resource(MealOrders, '/api/v1/meal/order')
 api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
 api.add_resource(OrderReport, '/api/v1/orderreport/<string:kitchen_id>')
+api.add_resource(Kitchens, '/api/v1/kitchens')
 
 if __name__ == '__main__':
     app.run()
