@@ -8,6 +8,7 @@
 import os
 import uuid
 import boto3
+from boto3.dynamodb.conditions import Key, Attr
 from datetime import datetime
 from pytz import timezone
 
@@ -29,7 +30,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['DEBUG'] = False
+app.config['DEBUG'] = True
 
 
 mail = Mail(app)
@@ -111,8 +112,10 @@ class MealOrders(Resource):
         """
         response = {}
         data = request.get_json(force=True)
-        order_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
-        order_time = datetime.now(tz=timezone('US/Pacific')).strftime("%H:%M:%S")
+        # order_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
+        # order_time = datetime.now(tz=timezone('US/Pacific')).strftime("%H:%M:%S")
+        created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
+
 
         if data.get('email') == None \
           or data.get('name') == None \
@@ -137,8 +140,7 @@ class MealOrders(Resource):
         try:
             add_order = db.put_item(TableName='meal_orders',
                 Item={'order_id': {'S': order_id},
-                      'order_date': {'S': order_date},
-                      'order_time': {'S': order_time},
+                      'created_at': {'S': created_at},
                       'email': {'S': data['email']},
                       'name': {'S': data['name']},
                       'street': {'S': data['street']},
@@ -192,6 +194,7 @@ class RegisterKitchen(Resource):
     def post(self):
         response = {}
         data = request.get_json(force=True)
+        print(data)
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
         if data.get('name') == None \
@@ -222,8 +225,8 @@ class RegisterKitchen(Resource):
         kitchen_id = uuid.uuid4().hex
 
         try:
-            add_kitchen = db.put_item(TableName='kitchen',
-                Item={'id': {'S': kitchen_id},
+            add_kitchen = db.put_item(TableName='kitchens',
+                Item={'kitchen_id': {'S': kitchen_id},
                       'created_at': {'S': created_at},
                       'name': {'S': data['name']},
                       'description': {'S': data['description']},
@@ -237,7 +240,7 @@ class RegisterKitchen(Resource):
                       'zipcode': {'N': str(data['zipcode'])},
                       'phone_number': {'S': str(data['phone_number'])},
                       'open_time': {'S': str(data['open_time'])},
-                      'close_time': {'S': str(data['close_time'])}
+                      'close_time': {'S': str(data['close_time'])},
                       'isOpen': {'BOOL': False}
                 }
             )
@@ -248,21 +251,21 @@ class RegisterKitchen(Resource):
             raise BadRequest('Request failed. Please try again later.')
 
 
-class Kitchens(Resource):
-    def get(self):
-        """Returns all kitchens"""
-        response = {}
-
-        try:
-            #TODO1: use scan table method to scan through the kitchens table and
-            #      and use filterExpression to filter kitchens that are open today.
-            #      The key to filter kitchens that are open is "isOpen" and the value its BOOL
-
-            response['message'] = 'Request successful'
-            response['result'] = #TODO2: send the values of Items key from the response
-            return response, 200
-        except:
-            raise BadRequest('Request failed. Please try again later.')
+# class Kitchens(Resource):
+#     def get(self):
+#         """Returns all kitchens"""
+#         response = {}
+#
+#         try:
+#             #TODO1: use scan table method to scan through the kitchens table and
+#             #      and use filterExpression to filter kitchens that are open today.
+#             #      The key to filter kitchens that are open is "isOpen" and the value its BOOL
+#
+#             response['message'] = 'Request successful'
+#             response['result'] = #TODO2: send the values of Items key from the response
+#             return response, 200
+#         except:
+#             raise BadRequest('Request failed. Please try again later.')
 
 
 class Meals(Resource):
@@ -291,7 +294,7 @@ class Meals(Resource):
             #      and use filterExpression to filter data using timestamp by today's date
 
             response['message'] = 'Request successful'
-            response['result'] = #TODO2: send the value of Items key from the response
+            # response['result'] = #TODO2: send the value of Items key from the response
             return response, 200
         except:
             raise BadRequest('Request failed. Please try again later.')
@@ -300,15 +303,20 @@ class Meals(Resource):
 class MealOrdersForKitchen(Resource):
     def get(self, kitchen_id):
         response = {}
-        data = request.get_json(force=True)
-
         #TODO1: get todays date
-
+        todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
         try:
             #TODO2: scan through the orders table and filter orders by the kitchen id and by today's date
-
+            meals = db.scan(TableName='meals',
+                             FilterExpression= 'kitchen_id = :value and (contains(created_at, :x1))',
+                             ExpressionAttributeValues={
+                                 ':value': {'S': kitchen_id},
+                                ':x1':{'S': todays_date}
+                             }
+            )
             response['message'] = 'Request successful!'
-            response['result'] = #TODO3: send the value of Items key from the response
+            response['result'] = meals['Items']
+            print(response)
             return response, 200
         except:
             raise BadRequest('Request failed. Please try again later.')
@@ -316,6 +324,9 @@ class MealOrdersForKitchen(Resource):
 
 api.add_resource(MealOrders, '/api/v1/meal/order')
 api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
+api.add_resource(RegisterKitchen, '/api/v1/infinitemeals/kitchens/register')
+api.add_resource(MealOrdersForKitchen, '/api/v1/infinitemeals/meals/get_meals/<string:kitchen_id>')
+
 
 
 if __name__ == '__main__':
