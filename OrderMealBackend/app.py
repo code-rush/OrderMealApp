@@ -112,14 +112,11 @@ class MealOrders(Resource):
         """
         response = {}
         data = request.get_json(force=True)
-        # order_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
-        # order_time = datetime.now(tz=timezone('US/Pacific')).strftime("%H:%M:%S")
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
-
+        #print(data)
         if data.get('email') == None \
           or data.get('name') == None \
-          or data.get('kitchen_id') == None \
           or data.get('street') == None \
           or data.get('zipCode') == None \
           or data.get('city') == None \
@@ -127,50 +124,51 @@ class MealOrders(Resource):
           or data.get('totalAmount') == None \
           or data.get('paid') == None \
           or data.get('paymentType') == None \
-          or data.get('mealOption1') == None \
-          or data.get('mealOption2') == None \
+          or data.get('order_items') == None \
           or data.get('phone') == None:
             raise BadRequest('Request failed. Please provide all \
                               required information.')
 
         order_id = uuid.uuid4().hex
-        mealOption1 = data['mealOption1']
-        mealOption2 = data['mealOption2']
-        totalAmount = data['totalAmount']
+        totalAmount= data['totalAmount']
 
-        try:
-            add_order = db.put_item(TableName='meal_orders',
-                Item={'order_id': {'S': order_id},
-                      'created_at': {'S': created_at},
-                      'email': {'S': data['email']},
-                      'name': {'S': data['name']},
-                      'street': {'S': data['street']},
-                      'zipCode': {'N': str(data['zipCode'])},
-                      'city': {'S': data['city']},
-                      'state': {'S': data['state']},
-                      'totalAmount': {'N': str(totalAmount)},
-                      'paid': {'BOOL': data['paid']},
-                      'paymentType': {'S': data['paymentType']},
-                      'mealOption1': {'N': str(mealOption1)},    # order_items [{"meal_id":"qty"},........]
-                      'mealOption2': {'N': str(mealOption2)},
-                      'phone': {'S': str(data['phone'])},
-                      'kitchen_id': {'S': str(data['kitchen_id'])}
-                }
-            )
-            
-            # msg = Message(subject='Order Confirmation',
-            #               sender=os.environ.get('EMAIL'),
-            #               html=render_template('emailTemplate.html',
-            #                    option1=mealOption1, option2=mealOption2,
-            #                    totalAmount=totalAmount),
-            #               recipients=[data['email']])
+        order_items = [{"M": x} for x in data['order_items']]
+        # for item in data['order_items']:
+        #     order_items.append({"M": item})
 
-            # mail.send(msg)
 
-            response['message'] = 'Request successful'
-            return response, 200
-        except:
-            raise BadRequest('Request failed. Please try again later.')
+        # try:
+        add_order = db.put_item(TableName='meal_orders',
+            Item={'order_id': {'S': order_id},
+                  'created_at': {'S': created_at},
+                  'email': {'S': data['email']},
+                  'name': {'S': data['name']},
+                  'street': {'S': data['street']},
+                  'zipCode': {'N': str(data['zipCode'])},
+                  'city': {'S': data['city']},
+                  'state': {'S': data['state']},
+                  'totalAmount': {'N': str(totalAmount)},
+                  'paid': {'BOOL': data['paid']},
+                  'paymentType': {'S': data['paymentType']},
+                  'order_items':{'L': order_items},
+                  'phone': {'S': str(data['phone'])},
+
+            }
+        )
+
+        # msg = Message(subject='Order Confirmation',
+        #               sender=os.environ.get('EMAIL'),
+        #               html=render_template('emailTemplate.html',
+        #                    option1=mealOption1, option2=mealOption2,
+        #                    totalAmount=totalAmount),
+        #               recipients=[data['email']])
+
+        # mail.send(msg)
+
+        response['message'] = 'Request successful'
+        return response, 200
+        # except:
+        #     raise BadRequest('Request failed. Please try again later.')
 
     def get(self):
         """RETURNS ALL ORDERS PLACED TODAY"""
