@@ -8,6 +8,7 @@
 import os
 import uuid
 import boto3
+from boto3.dynamodb.conditions import Key, Attr
 from datetime import datetime
 from pytz import timezone
 
@@ -111,8 +112,10 @@ class MealOrders(Resource):
         """
         response = {}
         data = request.get_json(force=True)
-        order_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
-        order_time = datetime.now(tz=timezone('US/Pacific')).strftime("%H:%M:%S")
+        # order_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
+        # order_time = datetime.now(tz=timezone('US/Pacific')).strftime("%H:%M:%S")
+        created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
+
 
         if data.get('email') == None \
           or data.get('name') == None \
@@ -138,8 +141,7 @@ class MealOrders(Resource):
         try:
             add_order = db.put_item(TableName='meal_orders',
                 Item={'order_id': {'S': order_id},
-                      'order_date': {'S': order_date},
-                      'order_time': {'S': order_time},
+                      'created_at': {'S': created_at},
                       'email': {'S': data['email']},
                       'name': {'S': data['name']},
                       'street': {'S': data['street']},
@@ -149,7 +151,7 @@ class MealOrders(Resource):
                       'totalAmount': {'N': str(totalAmount)},
                       'paid': {'BOOL': data['paid']},
                       'paymentType': {'S': data['paymentType']},
-                      'mealOption1': {'N': str(mealOption1)},
+                      'mealOption1': {'N': str(mealOption1)},    # order_items [{"meal_id":"qty"},........]
                       'mealOption2': {'N': str(mealOption2)},
                       'phone': {'S': str(data['phone'])},
                       'kitchen_id': {'S': str(data['kitchen_id'])}
@@ -193,6 +195,7 @@ class RegisterKitchen(Resource):
     def post(self):
         response = {}
         data = request.get_json(force=True)
+        print(data)
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
         if data.get('name') == None \
@@ -223,8 +226,8 @@ class RegisterKitchen(Resource):
         kitchen_id = uuid.uuid4().hex
 
         try:
-            add_kitchen = db.put_item(TableName='kitchen',
-                Item={'id': {'S': kitchen_id},
+            add_kitchen = db.put_item(TableName='kitchens',
+                Item={'kitchen_id': {'S': kitchen_id},
                       'created_at': {'S': created_at},
                       'name': {'S': data['name']},
                       'description': {'S': data['description']},
@@ -247,8 +250,7 @@ class RegisterKitchen(Resource):
             return response, 200
         except:
             raise BadRequest('Request failed. Please try again later.')
-
-
+            
 class Kitchens(Resource):
     def get(self):
         """Returns all kitchens"""
@@ -271,8 +273,7 @@ class Kitchens(Resource):
             print(e)
             raise BadRequest('Request failed. Please try again later.')
 
-
-# class Meals(Resource):
+class Meals(Resource):
 #     def post(self, kitchen_id):
 #         response = {}
 
@@ -290,19 +291,25 @@ class Kitchens(Resource):
 #         except:
 #             raise BadRequest('Request failed. Please try again later.')
 
-#     def get(self, kitchen_id):
-#         response = {}
-
-#         try:
-#             #TODO1: use scan or query method to scan through the meals table using the kitchen id
-#             #      and use filterExpression to filter data using timestamp by today's date
-
-#             response['message'] = 'Request successful'
-#             response['result'] = #TODO2: send the value of Items key from the response
-#             return response, 200
-#         except:
-#             raise BadRequest('Request failed. Please try again later.')
-
+    def get(self, kitchen_id):
+        response = {}
+        # TODO1: get todays date
+        todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
+        try:
+            # TODO2: scan through the orders table and filter orders by the kitchen id and by today's date
+            meals = db.scan(TableName='meals',
+                            FilterExpression='kitchen_id = :value and (contains(created_at, :x1))',
+                            ExpressionAttributeValues={
+                                ':value': {'S': kitchen_id},
+                                ':x1': {'S': todays_date}
+                            }
+                            )
+            response['message'] = 'Request successful!'
+            response['result'] = meals['Items']
+            print(response)
+            return response, 200
+        except:
+            raise BadRequest('Request failed. Please try again later.')
 
 class OrderReport(Resource):
     def get(self, kitchen_id):
@@ -327,6 +334,8 @@ class OrderReport(Resource):
 
 api.add_resource(MealOrders, '/api/v1/meal/order')
 api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
+api.add_resource(RegisterKitchen, '/api/v1/infinitemeals/kitchens/register')
+api.add_resource(Meals, '/api/v1/meals/<string:kitchen_id>')
 api.add_resource(OrderReport, '/api/v1/orderreport/<string:kitchen_id>')
 api.add_resource(Kitchens, '/api/v1/kitchens')
 
