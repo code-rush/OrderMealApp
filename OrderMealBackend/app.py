@@ -137,6 +137,15 @@ class MealOrders(Resource):
         mealOption1 = data['mealOption1']
         mealOption2 = data['mealOption2']
         totalAmount = data['totalAmount']
+        #Version of order_items submitted to DB
+        order_details = data['order_items']
+
+        for i in data['order_items']:
+          del order_details[i]["kitchen_id"]
+          del order_details[i]["price"]
+          del order_details[i]["meal_title"]
+
+
 
         try:
             add_order = db.put_item(TableName='meal_orders',
@@ -161,8 +170,8 @@ class MealOrders(Resource):
             # msg = Message(subject='Order Confirmation',
             #               sender=os.environ.get('EMAIL'),
             #               html=render_template('emailTemplate.html',
-            #                    option1=mealOption1, option2=mealOption2,
-            #                    totalAmount=totalAmount),
+            #                    order_items=data['order_items'],
+            #                    totalAmount=totalAmount, name=data['name']),
             #               recipients=[data['email']])
 
             # mail.send(msg)
