@@ -119,6 +119,7 @@ class MealOrders(Resource):
 
         if data.get('email') == None \
           or data.get('name') == None \
+          or data.get('kitchen_id') == None \
           or data.get('street') == None \
           or data.get('zipCode') == None \
           or data.get('city') == None \
@@ -152,18 +153,19 @@ class MealOrders(Resource):
                       'paymentType': {'S': data['paymentType']},
                       'mealOption1': {'N': str(mealOption1)},    # order_items [{"meal_id":"qty"},........]
                       'mealOption2': {'N': str(mealOption2)},
-                      'phone': {'S': str(data['phone'])}
+                      'phone': {'S': str(data['phone'])},
+                      'kitchen_id': {'S': str(data['kitchen_id'])}
                 }
             )
             
-            msg = Message(subject='Order Confirmation',
-                          sender=os.environ.get('EMAIL'),
-                          html=render_template('emailTemplate.html',
-                               option1=mealOption1, option2=mealOption2,
-                               totalAmount=totalAmount),
-                          recipients=[data['email']])
+            # msg = Message(subject='Order Confirmation',
+            #               sender=os.environ.get('EMAIL'),
+            #               html=render_template('emailTemplate.html',
+            #                    option1=mealOption1, option2=mealOption2,
+            #                    totalAmount=totalAmount),
+            #               recipients=[data['email']])
 
-            mail.send(msg)
+            # mail.send(msg)
 
             response['message'] = 'Request successful'
             return response, 200
@@ -171,15 +173,14 @@ class MealOrders(Resource):
             raise BadRequest('Request failed. Please try again later.')
 
     def get(self):
-        """Returns todays meal orders"""
+        """RETURNS ALL ORDERS PLACED TODAY"""
         response = {}
         todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
-
         try:
             orders = db.scan(TableName='meal_orders',
-                FilterExpression='order_date = :value',
+                FilterExpression='order_date = :date',
                 ExpressionAttributeValues={
-                    ':value': {'S': todays_date}
+                    ':date': {'S': todays_date}
                 }
             )
 
@@ -249,42 +250,46 @@ class RegisterKitchen(Resource):
             return response, 200
         except:
             raise BadRequest('Request failed. Please try again later.')
-
-
-# class Kitchens(Resource):
-#     def get(self):
-#         """Returns all kitchens"""
-#         response = {}
-#
-#         try:
-#             #TODO1: use scan table method to scan through the kitchens table and
-#             #      and use filterExpression to filter kitchens that are open today.
-#             #      The key to filter kitchens that are open is "isOpen" and the value its BOOL
-#
-#             response['message'] = 'Request successful'
-#             response['result'] = #TODO2: send the values of Items key from the response
-#             return response, 200
-#         except:
-#             raise BadRequest('Request failed. Please try again later.')
-
-
-class Meals(Resource):
-    def post(self, kitchen_id):
+            
+class Kitchens(Resource):
+    def get(self):
+        """Returns all kitchens"""
         response = {}
 
-        #TODO1: Go through the database schema and validate if the all the data
-        #       that is needed to post a meal is provided. If not, then raise a BadRequest Exception
-
-
-        #TODO2: create a unique id for the meal
 
         try:
-            #TODO3: use put_item method to write data to the meals database table
+
+            openkitchens = db.scan(TableName='kitchens',
+                               FilterExpression='isOpen = :value',
+                               ExpressionAttributeValues={
+                                   ':value': {'BOOL': True}
+                               })
 
             response['message'] = 'Request successful'
-            return response, 201
-        except:
+            response['result'] = openkitchens['Items']
+            print(openkitchens)
+            return response, 200
+        except Exception as e:
+            print(e)
             raise BadRequest('Request failed. Please try again later.')
+
+class Meals(Resource):
+#     def post(self, kitchen_id):
+#         response = {}
+
+#         #TODO1: Go through the database schema and validate if the all the data
+#         #       that is needed to post a meal is provided. If not, then raise a BadRequest Exception
+
+
+#         #TODO2: create a unique id for the meal
+
+#         try:
+#             #TODO3: use put_item method to write data to the meals database table
+
+#             response['message'] = 'Request successful'
+#             return response, 201
+#         except:
+#             raise BadRequest('Request failed. Please try again later.')
 
     def get(self, kitchen_id):
         response = {}
@@ -306,16 +311,33 @@ class Meals(Resource):
         except:
             raise BadRequest('Request failed. Please try again later.')
 
+class OrderReport(Resource):
+    def get(self, kitchen_id):
+        response = {}
+        todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
+        k_id = kitchen_id
+        try:
+            orders = db.scan(TableName='meal_orders',
+                FilterExpression='kitchen_id = :value AND order_date = :date',
+                ExpressionAttributeValues={
+                    ':value': {'S': k_id},
+                    ':date': {'S': todays_date}
+                }
+            )
 
-
-
+            response['result'] = orders['Items']
+            response['message'] = 'Request successful'
+            return response, 200
+        except:
+            raise BadRequest('Request failed. please try again later.')
 
 
 api.add_resource(MealOrders, '/api/v1/meal/order')
 api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
 api.add_resource(RegisterKitchen, '/api/v1/infinitemeals/kitchens/register')
 api.add_resource(Meals, '/api/v1/meals/<string:kitchen_id>')
-
+api.add_resource(OrderReport, '/api/v1/orderreport/<string:kitchen_id>')
+api.add_resource(Kitchens, '/api/v1/kitchens')
 
 if __name__ == '__main__':
     app.run()
