@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 22:11:42
+# @Last Modified time: 2019-04-12 22:23:05
 
 
 import os
@@ -170,7 +170,7 @@ class MealOrders(Resource):
                           sender=os.environ.get('EMAIL'),
                           html=render_template('emailTemplate.html',
                                order_items=data['order_items'],
-                               kitchen=kitchen['Item']
+                               kitchen=kitchen['Item'],
                                totalAmount=totalAmount, name=data['name']),
                           recipients=[data['email']])
 
@@ -275,7 +275,7 @@ class Kitchens(Resource):
         try:
             openkitchens = db.scan(TableName='kitchens',
                                FilterExpression='isOpen = :value',
-                               ProjectionExpression='name, close_time, description'
+                               ProjectionExpression='name, close_time, description',
                                ExpressionAttributeValues={
                                    ':value': {'BOOL': True}
                                })
