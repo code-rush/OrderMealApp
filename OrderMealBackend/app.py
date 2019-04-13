@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-09 21:38:43
+# @Last Modified time: 2019-04-12 20:29:27
 
 
 import os
@@ -130,45 +130,49 @@ class MealOrders(Resource):
                               required information.')
 
         order_id = uuid.uuid4().hex
-        totalAmount= data['totalAmount']
+        totalAmount = data['totalAmount']
+        #Version of order_items submitted to DB
+        order_details = data['order_items']
 
-        order_items = [{"M": x} for x in data['order_items']]
-        # for item in data['order_items']:
-        #     order_items.append({"M": item})
+        for i in data['order_items']:
+            del order_details[i]["kitchen_id"]
+            del order_details[i]["price"]
+            del order_details[i]["meal_title"]
 
+        order_items = [{"M": x} for x in order_details]
 
-        # try:
-        add_order = db.put_item(TableName='meal_orders',
-            Item={'order_id': {'S': order_id},
-                  'created_at': {'S': created_at},
-                  'email': {'S': data['email']},
-                  'name': {'S': data['name']},
-                  'street': {'S': data['street']},
-                  'zipCode': {'N': str(data['zipCode'])},
-                  'city': {'S': data['city']},
-                  'state': {'S': data['state']},
-                  'totalAmount': {'N': str(totalAmount)},
-                  'paid': {'BOOL': data['paid']},
-                  'paymentType': {'S': data['paymentType']},
-                  'order_items':{'L': order_items},
-                  'phone': {'S': str(data['phone'])},
+        try:
+            add_order = db.put_item(TableName='meal_orders',
+                Item={'order_id': {'S': order_id},
+                      'created_at': {'S': created_at},
+                      'email': {'S': data['email']},
+                      'name': {'S': data['name']},
+                      'street': {'S': data['street']},
+                      'zipCode': {'N': str(data['zipCode'])},
+                      'city': {'S': data['city']},
+                      'state': {'S': data['state']},
+                      'totalAmount': {'N': str(totalAmount)},
+                      'paid': {'BOOL': data['paid']},
+                      'paymentType': {'S': data['paymentType']},
+                      'order_items':{'L': order_items},
+                      'phone': {'S': str(data['phone'])},
+                      'kitchen_id': {'S': str(data['kitchen_id'])}
+                }
+            )
+            
+            # msg = Message(subject='Order Confirmation',
+            #               sender=os.environ.get('EMAIL'),
+            #               html=render_template('emailTemplate.html',
+            #                    order_items=data['order_items'],
+            #                    totalAmount=totalAmount, name=data['name']),
+            #               recipients=[data['email']])
 
-            }
-        )
+            # mail.send(msg)
 
-        # msg = Message(subject='Order Confirmation',
-        #               sender=os.environ.get('EMAIL'),
-        #               html=render_template('emailTemplate.html',
-        #                    option1=mealOption1, option2=mealOption2,
-        #                    totalAmount=totalAmount),
-        #               recipients=[data['email']])
-
-        # mail.send(msg)
-
-        response['message'] = 'Request successful'
-        return response, 200
-        # except:
-        #     raise BadRequest('Request failed. Please try again later.')
+            response['message'] = 'Request successful'
+            return response, 200
+        except:
+            raise BadRequest('Request failed. Please try again later.')
 
     def get(self):
         """RETURNS ALL ORDERS PLACED TODAY"""
@@ -212,14 +216,18 @@ class RegisterKitchen(Resource):
             raise BadRequest('Request failed. Please provide all \
                               required information.')
 
-        #TODO1: scan through the kitchen table and filter the results with the kitchen name 
-        #      used for signing up. Start by uncommenting the code below.
+        # scan to check if the kitchen name exists
+        kitchen = db.scan(TableName="kitchens",
+            FilterExpression='name = :val',
+            ExpressionAttributeValues={
+                ':val': {'S': data['name']}
+            }
+        )
 
-        # kitchen = db.scan(TableName="")
-
-        # if kitchen.get('Items') != []:
-        #     response['message'] = 'This kitchen name is already taken.'
-        #     return response, 400
+        # raise exception if the kitchen name already exists
+        if kitchen.get('Items') != []:
+            response['message'] = 'This kitchen name is already taken.'
+            return response, 400
 
         kitchen_id = uuid.uuid4().hex
 
@@ -254,9 +262,7 @@ class Kitchens(Resource):
         """Returns all kitchens"""
         response = {}
 
-
         try:
-
             openkitchens = db.scan(TableName='kitchens',
                                FilterExpression='isOpen = :value',
                                ExpressionAttributeValues={
@@ -291,10 +297,9 @@ class Meals(Resource):
 
     def get(self, kitchen_id):
         response = {}
-        # TODO1: get todays date
         todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
+        
         try:
-            # TODO2: scan through the orders table and filter orders by the kitchen id and by today's date
             meals = db.scan(TableName='meals',
                             FilterExpression='kitchen_id = :value and (contains(created_at, :x1))',
                             ExpressionAttributeValues={
@@ -314,6 +319,7 @@ class OrderReport(Resource):
         response = {}
         todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
         k_id = kitchen_id
+
         try:
             orders = db.scan(TableName='meal_orders',
                 FilterExpression='kitchen_id = :value AND order_date = :date',
