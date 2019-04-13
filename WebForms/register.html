@@ -63,7 +63,7 @@
 
                     <div class="form-row">
                             <div class="col-md-6 col-sm-6">
-                                <lable for="kitchendescription"> Kitchen Description</lable>
+                                <lable for="kitchendescription" class="col-form-label"> Kitchen Description</lable>
                                 <textarea rows="2"
                                        class="form-control"
                                         id="kitchendescription"> </textarea>
@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="col-md-6 col-sm-6">
-                            <input type="text"
+                            <input type="number"
                                    class="form-control"
                                    placeholder="Zip Code" required/>
                             <div class="invalid-feedback">
@@ -129,7 +129,7 @@
 
                     <div class="form-row">
                         <div class="col-md-6 col-sm-6">
-                            <input type="text"
+                            <input type="tel"
                                    class="form-control"
                                    placeholder="Phone Number" required/>
                             <div class="invalid-feedback">
@@ -149,18 +149,22 @@
 
                     <div class="form-row">
                      <div class="col-md-6 col-sm-6">
+                         <label for="OpenTime" class="col-form-label">Kitchen Open Time</label>
                             <input type="time"
                                    class="form-control"
-                                   placeholder="Kitchen Open Time" required/>
+                                   placeholder="Kitchen Open Time"
+                                   id="OpenTime" required/>
                             <div class="invalid-feedback">
                                 Please provide Kitchen's Open Time.
                             </div>
                         </div>
 
                         <div class="col-md-6 col-sm-6">
+                            <label for="CloseTime" class="col-form-label">Kitchen Close Time</label>
                             <input type="time"
                                    class="form-control"
-                                   placeholder="Kitchen Close Time" required/>
+                                   placeholder="Kitchen Close Time"
+                                   id="CloseTime" required/>
                             <div class="invalid-feedback">
                                 Please provide Kitchen's Close Time.
                             </div>
@@ -170,13 +174,17 @@
 
                     <div class="form-row">
                         <div class="col-md-6 col-sm-6">
-                                <label>Do you Deliver?    <input type="checkbox"/></label>
+                                <label>Do you Deliver?</label>
+                            <input type="checkbox"/>
                         </div>
 
                         <div class="col-md-6 col-sm-6">
+                            <label for="PickUpTime" class="col-form-label">Kitchen Open Time </label>
                             <input type="time"
                                    class="form-control"
-                                   placeholder="Pick Up Time"/>
+                                   placeholder="Pick Up Time"
+                                   id="PickUpTime"/>
+
                         </div>
                     </div>
 
