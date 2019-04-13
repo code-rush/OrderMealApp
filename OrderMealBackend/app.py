@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 22:36:41
+# @Last Modified time: 2019-04-12 22:55:22
 
 
 import os
@@ -273,12 +273,13 @@ class Kitchens(Resource):
         """Returns all kitchens"""
         response = {}
 
+
         try:
             openkitchens = db.scan(TableName='kitchens',
                 FilterExpression='isOpen = :value',
-                ProjectionExpression=':name, close_time, description',
-                ExpressionAttributeName={
-                    ':name': 'name'
+                ProjectionExpression='#kitchen_name, kitchen_id, close_time, description',
+                ExpressionAttributeNames={
+                    '#kitchen_name': 'name'
                 },
                 ExpressionAttributeValues={
                     ':value': {'BOOL': True}
