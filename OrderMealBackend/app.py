@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 20:43:02
+# @Last Modified time: 2019-04-12 22:11:42
 
 
 import os
@@ -17,7 +17,7 @@ from flask_restful import Resource, Api
 from flask_cors import CORS
 from flask_mail import Mail, Message
 
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 from werkzeug.security import generate_password_hash, \
      check_password_hash
 
@@ -50,20 +50,20 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 # =======HELPER FUNCTIONS FOR UPLOADING AN IMAGE=============
-def upload_file(file, bucket, key):
-    image_uploaded = False
+# def upload_file(file, bucket, key):
+#     image_uploaded = False
 
-    if file and allowed_file(file.filename):
-        upload_file = s3.put_object(
-                            Bucket=bucket,
-                            Body=file,
-                            Key=key,
-                            ACL='public-read',
-                            ContentType='image/jpeg'
-                        )
-        image_uploaded = True
+#     if file and allowed_file(file.filename):
+#         upload_file = s3.put_object(
+#                             Bucket=bucket,
+#                             Body=file,
+#                             Key=key,
+#                             ACL='public-read',
+#                             ContentType='image/jpeg'
+#                         )
+#         image_uploaded = True
 
-    return image_uploaded
+#     return image_uploaded
 
 
 def upload_meal_img(file, bucket, key):
@@ -86,23 +86,23 @@ def allowed_file(filename):
 
 # ===========================================================  
 
-class TodaysMealPhoto(Resource):
-    def post(self):
-        """Uploads image to s3 bucket"""
-        file = request.files['image']
-        response = {}
+# class TodaysMealPhoto(Resource):
+#     def post(self):
+#         """Uploads image to s3 bucket"""
+#         file = request.files['image']
+#         response = {}
 
-        key = datetime.now(tz=timezone('US/Pacific')).strftime("%Y%m%d")
+#         key = datetime.now(tz=timezone('US/Pacific')).strftime("%Y%m%d")
 
-        try:
-            image_uploaded = upload_file(file, BUCKET_NAME, key)
-            if image_uploaded:
-                response['message'] = 'File uploaded!'
-            else:
-                response ['message'] = 'File not allowed!'
-            return response, 200
-        except:
-            raise BadRequest('Request failed. File not uploaded.')
+#         try:
+#             image_uploaded = upload_file(file, BUCKET_NAME, key)
+#             if image_uploaded:
+#                 response['message'] = 'File uploaded!'
+#             else:
+#                 response ['message'] = 'File not allowed!'
+#             return response, 200
+#         except:
+#             raise BadRequest('Request failed. File not uploaded.')
 
 
 class MealOrders(Resource):
@@ -125,19 +125,22 @@ class MealOrders(Resource):
           or data.get('paid') == None \
           or data.get('paymentType') == None \
           or data.get('order_items') == None \
-          or data.get('phone') == None:
+          or data.get('phone') == None \
+          or data.get('kitchen_id') == None:
             raise BadRequest('Request failed. Please provide all \
                               required information.')
 
         order_id = uuid.uuid4().hex
         totalAmount = data['totalAmount']
         #Version of order_items submitted to DB
-        order_details = data['order_items']
+        order_details = []
 
         for i in data['order_items']:
-            del order_details[i]["kitchen_id"]
-            del order_details[i]["price"]
-            del order_details[i]["meal_title"]
+            item = {}
+            item['meal_id'] = {}
+            item['meal_id']['S'] = i['meal_id']
+            item['qty'] = {}
+            item['qty']['N'] = str(i['qty'])
 
         order_items = [{"M": x} for x in order_details]
 
@@ -160,14 +163,18 @@ class MealOrders(Resource):
                 }
             )
             
-            # msg = Message(subject='Order Confirmation',
-            #               sender=os.environ.get('EMAIL'),
-            #               html=render_template('emailTemplate.html',
-            #                    order_items=data['order_items'],
-            #                    totalAmount=totalAmount, name=data['name']),
-            #               recipients=[data['email']])
+            kitchen = db.get_item(TableName='kitchens',
+                Key={'kitchen_id': {'S': data['kitchen_id']}})
 
-            # mail.send(msg)
+            msg = Message(subject='Order Confirmation',
+                          sender=os.environ.get('EMAIL'),
+                          html=render_template('emailTemplate.html',
+                               order_items=data['order_items'],
+                               kitchen=kitchen['Item']
+                               totalAmount=totalAmount, name=data['name']),
+                          recipients=[data['email']])
+
+            mail.send(msg)
 
             response['message'] = 'Request successful'
             return response, 200
@@ -178,6 +185,7 @@ class MealOrders(Resource):
         """RETURNS ALL ORDERS PLACED TODAY"""
         response = {}
         todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
+
         try:
             orders = db.scan(TableName='meal_orders',
                 FilterExpression='order_date = :date',
@@ -202,6 +210,7 @@ class RegisterKitchen(Resource):
 
         if data.get('name') == None \
           or data.get('description') == None \
+          or data.get('email') == None \
           or data.get('username') == None \
           or data.get('password') == None \
           or data.get('first_name') == None \
@@ -248,7 +257,8 @@ class RegisterKitchen(Resource):
                       'phone_number': {'S': str(data['phone_number'])},
                       'open_time': {'S': str(data['open_time'])},
                       'close_time': {'S': str(data['close_time'])},
-                      'isOpen': {'BOOL': False}
+                      'isOpen': {'BOOL': False},
+                      'email': {'S': data['email']}
                 }
             )
 
@@ -265,16 +275,15 @@ class Kitchens(Resource):
         try:
             openkitchens = db.scan(TableName='kitchens',
                                FilterExpression='isOpen = :value',
+                               ProjectionExpression='name, close_time, description'
                                ExpressionAttributeValues={
                                    ':value': {'BOOL': True}
                                })
 
             response['message'] = 'Request successful'
             response['result'] = openkitchens['Items']
-            print(openkitchens)
             return response, 200
-        except Exception as e:
-            print(e)
+        except:
             raise BadRequest('Request failed. Please try again later.')
 
 class Meals(Resource):
@@ -289,6 +298,17 @@ class Meals(Resource):
         meal_id = uuid.uuid4().hex
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
+        items = []
+        for i in data['items']:
+            item = {}
+            item['title'] = {}
+            item['title']['S'] = i['title']
+            item['qty'] = {}
+            item['qty']['N'] = str(i['qty'])
+            items.append(item)
+
+        description = [{'M': x} for i in items]
+
         try:
             photo_path = upload_meal_img(request.form['photo'], BUCKET_NAME, 
                 'meals_imgs/{}_{}'.format(str(kitchen_id), meal_id))
@@ -302,7 +322,7 @@ class Meals(Resource):
                       'created_at': {'S': created_at},
                       'kitchen_id': {'S': str(kitchen_id)},
                       'name': {'S': str(request.form['name'])},
-                      'description': {'S': data['items']},
+                      'description': {'L': description},
                       'price': {'S': request.form['price']},
                       'photo': {'S': photo_path}
                 }
@@ -324,15 +344,24 @@ class Meals(Resource):
         
         try:
             meals = db.scan(TableName='meals',
-                            FilterExpression='kitchen_id = :value and (contains(created_at, :x1))',
-                            ExpressionAttributeValues={
-                                ':value': {'S': kitchen_id},
-                                ':x1': {'S': todays_date}
-                            }
-                            )
+                FilterExpression='kitchen_id = :value and (contains(created_at, :x1))',
+                ExpressionAttributeValues={
+                    ':value': {'S': kitchen_id},
+                    ':x1': {'S': todays_date}
+                }
+            )
+
+            for meal in meals['Items']:
+                description = ''
+
+                for item in meal['description']:
+                    description += item['M']['title']['S']
+
+                del meal['description']
+                meal['description']['S'] = description
+
             response['message'] = 'Request successful!'
             response['result'] = meals['Items']
-            print(response)
             return response, 200
         except:
             raise BadRequest('Request failed. Please try again later.')
@@ -359,14 +388,40 @@ class OrderReport(Resource):
             raise BadRequest('Request failed. please try again later.')
 
 
+class KitchenSignIn(Resource):
+    def post(self):
+        response = {}
+        data = request.get_json(force=True)
+
+        if data.get('email') == None:
+            raise BadRequest('Request failed. Please provide email.')
+
+        try:
+            user = db.query(TableName="kitchens",
+                IndexName='email-index',
+                Limit=1,
+                KeyConditionExpression='email = :val',
+                ExpressionAttributeValues={
+                    ':val': {'S': data['email']}
+                }
+            )
+
+            if user.get('Item') == None:
+                raise NotFound('User not found.')
+
+            response['message'] = 'Request successful!'
+            return response, 200
+        except:
+            raise BadRequest('Request failed. Please try again later.')
 
 
-api.add_resource(MealOrders, '/api/v1/meal/order')
-api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
-api.add_resource(RegisterKitchen, '/api/v1/infinitemeals/kitchens/register')
+api.add_resource(MealOrders, '/api/v1/meals/order')
+# api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
+api.add_resource(RegisterKitchen, '/api/v1/kitchens/register')
 api.add_resource(Meals, '/api/v1/meals/<string:kitchen_id>')
-api.add_resource(OrderReport, '/api/v1/orderreport/<string:kitchen_id>')
+api.add_resource(OrderReport, '/api/v1/orders/report/<string:kitchen_id>')
 api.add_resource(Kitchens, '/api/v1/kitchens')
+api.add_resource(KitchenSignIn, '/api/v1/kitchens/sign_in')
 
 if __name__ == '__main__':
     app.run()
