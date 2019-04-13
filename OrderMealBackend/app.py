@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 22:55:22
+# @Last Modified time: 2019-04-12 23:03:26
 
 
 import os
@@ -421,7 +421,7 @@ class KitchenSignIn(Resource):
             raise BadRequest('Request failed. Please try again later.')
 
 
-api.add_resource(MealOrders, '/api/v1/meals/order')
+api.add_resource(MealOrders, '/api/v1/orders')
 # api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
 api.add_resource(RegisterKitchen, '/api/v1/kitchens/register')
 api.add_resource(Meals, '/api/v1/meals/<string:kitchen_id>')
