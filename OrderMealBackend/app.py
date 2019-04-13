@@ -188,9 +188,10 @@ class MealOrders(Resource):
 
         try:
             orders = db.scan(TableName='meal_orders',
-                FilterExpression='order_date = :date',
+                FilterExpression='(contains(created_at, :x1))',
                 ExpressionAttributeValues={
-                    ':date': {'S': todays_date}
+
+                    ':x1': {'S': todays_date}
                 }
             )
 
@@ -378,10 +379,10 @@ class OrderReport(Resource):
 
         try:
             orders = db.scan(TableName='meal_orders',
-                FilterExpression='kitchen_id = :value AND order_date = :date',
+                FilterExpression='kitchen_id = :value AND (contains(created_at, :x1))',
                 ExpressionAttributeValues={
                     ':value': {'S': k_id},
-                    ':date': {'S': todays_date}
+                    ':x1': {'S': todays_date}
                 }
             )
 
