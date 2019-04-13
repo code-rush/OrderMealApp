@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 20:29:27
+# @Last Modified time: 2019-04-12 20:43:02
 
 
 import os
@@ -278,22 +278,45 @@ class Kitchens(Resource):
             raise BadRequest('Request failed. Please try again later.')
 
 class Meals(Resource):
-#     def post(self, kitchen_id):
-#         response = {}
+    def post(self, kitchen_id):
+        response = {}
+        if request.form.get('name') == None \
+          or request.form.get('items') == None \
+          or request.form.get('photo') == None \
+          or request.form.get('price') == None:
+            raise BadRequest('Request failed. Please provide required details.')
 
-#         #TODO1: Go through the database schema and validate if the all the data
-#         #       that is needed to post a meal is provided. If not, then raise a BadRequest Exception
+        meal_id = uuid.uuid4().hex
+        created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
+        try:
+            photo_path = upload_meal_img(request.form['photo'], BUCKET_NAME, 
+                'meals_imgs/{}_{}'.format(str(kitchen_id), meal_id))
 
-#         #TODO2: create a unique id for the meal
+            if photo_path == None:
+                raise BadRequest('Request failed. \
+                    Something went wrong uploading a photo.')
 
-#         try:
-#             #TODO3: use put_item method to write data to the meals database table
+            add_meal = db.put_item(TableName='meals',
+                Item={'meal_id': {'S': meal_id},
+                      'created_at': {'S': created_at},
+                      'kitchen_id': {'S': str(kitchen_id)},
+                      'name': {'S': str(request.form['name'])},
+                      'description': {'S': data['items']},
+                      'price': {'S': request.form['price']},
+                      'photo': {'S': photo_path}
+                }
+            )
 
-#             response['message'] = 'Request successful'
-#             return response, 201
-#         except:
-#             raise BadRequest('Request failed. Please try again later.')
+            kitchen = db.update_item(TableName='kitchens',
+                Key={'kitchen_id': {'S': str(kitchen_id)}},
+                UpdateExpression='SET isOpen = :val',
+                ExpressionAttributeValues={
+                    ':val': {'BOOL': True}
+                }
+            )
+        except:
+            raise BadRequest('Request failed. Please try again later.')
 
     def get(self, kitchen_id):
         response = {}
@@ -334,6 +357,8 @@ class OrderReport(Resource):
             return response, 200
         except:
             raise BadRequest('Request failed. please try again later.')
+
+
 
 
 api.add_resource(MealOrders, '/api/v1/meal/order')
