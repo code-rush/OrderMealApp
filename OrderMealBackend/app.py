@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 23:03:26
+# @Last Modified time: 2019-04-12 23:20:47
 
 
 import os
@@ -141,6 +141,7 @@ class MealOrders(Resource):
             item['meal_id']['S'] = i['meal_id']
             item['qty'] = {}
             item['qty']['N'] = str(i['qty'])
+            order_details.append(item)
 
         order_items = [{"M": x} for x in order_details]
 
@@ -166,15 +167,15 @@ class MealOrders(Resource):
             kitchen = db.get_item(TableName='kitchens',
                 Key={'kitchen_id': {'S': data['kitchen_id']}})
 
-            msg = Message(subject='Order Confirmation',
-                          sender=os.environ.get('EMAIL'),
-                          html=render_template('emailTemplate.html',
-                               order_items=data['order_items'],
-                               kitchen=kitchen['Item'],
-                               totalAmount=totalAmount, name=data['name']),
-                          recipients=[data['email']])
+            # msg = Message(subject='Order Confirmation',
+            #               sender=os.environ.get('EMAIL'),
+            #               html=render_template('emailTemplate.html',
+            #                    order_items=data['order_items'],
+            #                    kitchen=kitchen['Item'],
+            #                    totalAmount=totalAmount, name=data['name']),
+            #               recipients=[data['email']])
 
-            mail.send(msg)
+            # mail.send(msg)
 
             response['message'] = 'Request successful'
             return response, 200
