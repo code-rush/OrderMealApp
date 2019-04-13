@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 22:23:05
+# @Last Modified time: 2019-04-12 22:36:41
 
 
 import os
@@ -274,11 +274,15 @@ class Kitchens(Resource):
 
         try:
             openkitchens = db.scan(TableName='kitchens',
-                               FilterExpression='isOpen = :value',
-                               ProjectionExpression='name, close_time, description',
-                               ExpressionAttributeValues={
-                                   ':value': {'BOOL': True}
-                               })
+                FilterExpression='isOpen = :value',
+                ProjectionExpression=':name, close_time, description',
+                ExpressionAttributeName={
+                    ':name': 'name'
+                },
+                ExpressionAttributeValues={
+                    ':value': {'BOOL': True}
+                }
+            )
 
             response['message'] = 'Request successful'
             response['result'] = openkitchens['Items']
