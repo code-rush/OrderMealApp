@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Kitchen Registration Form</h3>
+        </div>
+        <form class="needs-validation" novalidate>
+        <div class="card-body">
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="username" required/>
+                            <div class="invalid-feedback">
+                                Please provide a username.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input type="password"
+                                   class="form-control"
+                                   placeholder="password" required/>
+                            <div class="invalid-feedback">
+                                Please provide a password.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-6">
+                            <input type="password"
+                                   class="form-control"
+                                   placeholder="verify password" required/>
+                            <div class="invalid-feedback">
+                                Please enter password again.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Kitchen Name" required/>
+                            <div class="invalid-feedback">
+                                Please provide a Kitchen name.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+                            <div class="col-md-6 col-sm-6">
+                                <lable for="kitchendescription"> Kitchen Description</lable>
+                                <textarea rows="2"
+                                       class="form-control"
+                                        id="kitchendescription"> </textarea>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6">
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="First Name" required/>
+                                <div class="invalid-feedback">
+                                    Please provide a First Name.
+                                </div>
+
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="Last Name" required/>
+                                <div class="invalid-feedback">
+                                    Please provide a Last Name.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Address" required/>
+                            <div class="invalid-feedback">
+                                Please provide Address of Kitchen.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="City" required/>
+                            <div class="invalid-feedback">
+                                Please provide a valid City.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="State" required/>
+                            <div class="invalid-feedback">
+                                Please provide a valid State.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Zip Code" required/>
+                            <div class="invalid-feedback">
+                                Please provide a valid Zip Code.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Phone Number" required/>
+                            <div class="invalid-feedback">
+                                Please provide a valid Phone Number.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input type="email"
+                                   class="form-control"
+                                   placeholder="Email" required/>
+                            <div class="invalid-feedback">
+                                Please provide a valid email ID.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                     <div class="col-md-6 col-sm-6">
+                            <input type="time"
+                                   class="form-control"
+                                   placeholder="Kitchen Open Time" required/>
+                            <div class="invalid-feedback">
+                                Please provide Kitchen's Open Time.
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input type="time"
+                                   class="form-control"
+                                   placeholder="Kitchen Close Time" required/>
+                            <div class="invalid-feedback">
+                                Please provide Kitchen's Close Time.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-6">
+                                <label>Do you Deliver?    <input type="checkbox"/></label>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input type="time"
+                                   class="form-control"
+                                   placeholder="Pick Up Time"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-6">
+                            <button class="btn btn-primary btn-block" type="submit"> Register</button>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <a class="btn btn-danger  btn-block" href="login.html">Cancel</a>
+                        </div>
+                    </div>
+            </div>
+        </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+</body>
+</html>
