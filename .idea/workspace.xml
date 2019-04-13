@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/OrderMealBackend/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="153" column="61" lean-forward="true" selection-start-line="152" selection-start-column="22" selection-end-line="153" selection-end-column="61" />
+            <state relative-caret-position="-1480">
+              <caret line="191" column="43" lean-forward="true" selection-start-line="191" selection-start-column="43" selection-end-line="191" selection-end-column="43" />
               <folding>
                 <element signature="e#160#169#0" expanded="true" />
               </folding>
@@ -53,10 +53,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1440" />
-    <option name="height" value="816" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -112,15 +111,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1554919856134</updated>
-      <workItem from="1554919862025" duration="11201000" />
+      <workItem from="1554919862025" duration="21511000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11201000" />
+    <option name="totallyTimeSpent" value="21511000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="816" extended-state="1" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
@@ -129,8 +128,8 @@
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Python Console" visible="true" weight="0.041436464" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32891566" />
+      <window_info anchor="bottom" id="Python Console" weight="0.2" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.22168675" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -152,8 +151,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/OrderMealBackend/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="153" column="61" lean-forward="true" selection-start-line="152" selection-start-column="22" selection-end-line="153" selection-end-column="61" />
+        <state relative-caret-position="-1480">
+          <caret line="191" column="43" lean-forward="true" selection-start-line="191" selection-start-column="43" selection-end-line="191" selection-end-column="43" />
           <folding>
             <element signature="e#160#169#0" expanded="true" />
           </folding>
