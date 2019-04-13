@@ -5,9 +5,14 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="ordermeal.js"></script>
+	<script src="script.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 	<!-- Navigation Bar -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
   		<a class="navbar-brand" href="index.html">Leena's Kitchen</a>
@@ -22,84 +27,202 @@
   		</div>
 	</nav>
 	<div id="report">
-	<h3> Today's Meal: </h3>
-	<div id="img"></div>
-	<br><br>
-	<h3> Inventory Report </h3>
-	<div id="inventory">
-  			<!-- <dt class="col-sm-2">Total Orders</dt>
-  			<dd class="col-sm-10" id="num_orders"></dd>
-			
-			<dt class="col-sm-2">Option 1</dt>
-  			<dd class="col-sm-10" id="num_one"></dd>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMeal">
+  			Add Meal
+		</button>
 
-  			<dt class="col-sm-2">Option 2</dt>
-  			<dd class="col-sm-10" id="num_two"></dd> -->
-		<table class="table table-hover table-responsive">
-			<thead class="thead-dark">
+<!-- Modal -->
+		<div class="modal fade" id="addMeal" tabindex="-1" role="dialog" aria-labelledby="addMealLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="addMealLabel">Add Meal</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			  <div class="modal-body">
+				<div>
+
+					<input type="text" placeholder="Meal Name"/>
+
+					<br>
+					<br>
+
+
+
+		<table id="option1-setup">
+
 				<tr>
-					<th scope="col">Component</th>
-					<th scope="col">Option 1</th>
-					<th scope="col">Option 2</th>
-					<th scope="col">Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">Qty Ordered</th>
-					<th id="op1_total"></th>
-					<th id="op2_total"></th>
-					<th id="kitchen_total"></th>
-				</tr>
-				<tr>
-					<th scope="row">Daal</th>
-					<td id="daal_1"></td>
-					<td id="daal_2"></td>
-					<td id="daal_total"></td>
-				</tr>
-				<tr>
-					<th scope="row">Bhaji</th>
-					<td id="bhaji_1"></td>
-					<td id="bhaji_2"></td>
-					<td id="bhaji_total"></td>
-				</tr>
-				<tr>
-					<th scope="row">Chapatis</th>
-					<td id="chapati_1"></td>
-					<td id="chapati_2"></td>
-					<td id="chapati_total"></td>
-				</tr>
-				<tr>
-					<th scope="row">Rice</th>
-					<td id="rice_1"></td>
-					<td id="rice_2"></td>
-					<td id="rice_total"></td>
+					<td>
+						<span>Select total number of items for this meal option?</span>
+					</td>
+					<td>
+						<select id="option1-items">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
-					<th scope="row">Cost Total</th>
-					<th id="op1_cost"></th>
-					<th id="op2_cost"></th>
-					<th id="kitchen_cost"></th>
+					<td>
+						<span>Item #</span>
+					</td>
+					<td>
+						<span>Item name</span>
+					</td>
+					<td>
+						<span>Item Quantity</span>
+					</td>
 				</tr>
-			</tbody>
+				<tr id="option1-item1">
+					<td>
+						<span>1</span>
+					</td>
+					<td>
+						<input type="text" placeholder="(15 characters limit)" maxlength="15">
+					</td>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="option1-item2">
+					<td>
+						<span>2</span>
+					</td>
+					<td>
+						<input type="text" placeholder="(15 characters limit)" maxlength="15">
+					</td>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="option1-item3">
+					<td>
+						<span>3</span>
+					</td>
+					<td>
+						<input type="text" placeholder="(15 characters limit)" maxlength="15">
+					</td>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="option1-item4">
+					<td>
+						<span>4</span>
+					</td>
+					<td>
+						<input type="text" placeholder="(15 characters limit)" maxlength="15">
+					</td>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="option1-item5">
+					<td>
+						<span>5</span>
+					</td>
+					<td>
+						<input type="text" placeholder="(15 characters limit)" maxlength="15">
+					</td>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</td>
+				</tr>
 		</table>
-			<!-- 
 
-  			<dt class="col-sm-2">Daal</dt>
-  			<dd class="col-sm-10" id="num_daal"></dd>
+					<br>
+					<br>
 
-  			<dt class="col-sm-2">Bhaji</dt>
-  			<dd class="col-sm-10" id="num_bhaji"></dd>
+					<form action="https://o5yv1ecpk1.execute-api.us-west-2.amazonaws.com/dev/api/v1/meal/image/upload" method="post" enctype="multipart/form-data">
+			<fieldset id="meal-form">
+				<label> Upload Meal Image</label>
+				<input type="file" id="meal" name="image" accept="image/png, image/jpeg" />
+			</fieldset>
+		</form>
 
-  			<dt class="col-sm-2">Chapatis</dt>
-  			<dd class="col-sm-10" id="num_chapati"></dd>
 
-  			<dt class="col-sm-2">Rice</dt>
-  			<dd class="col-sm-10" id="num_rice"></dd> -->
+		<br>
+		<br>
+		<div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Meal Cost $</span>
+            </div>
+                <input type="number" class="form-control">
+        </div>
+		<br>
+		<br>
+
+
 	</div>
-	<br><br>
-	<h3> Order Information </h3>
-	<div id="delivery" class="row"></div>
-</div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Add Meal</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+	</div>
 </body>
 </html>
