@@ -2,13 +2,13 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-12 23:20:47
+# @Last Modified time: 2019-04-13 19:41:02
 
 
 import os
 import uuid
 import boto3
-from boto3.dynamodb.conditions import Key, Attr
+import json
 from datetime import datetime
 from pytz import timezone
 
@@ -191,7 +191,6 @@ class MealOrders(Resource):
             orders = db.scan(TableName='meal_orders',
                 FilterExpression='(contains(created_at, :x1))',
                 ExpressionAttributeValues={
-
                     ':x1': {'S': todays_date}
                 }
             )
@@ -207,7 +206,6 @@ class RegisterKitchen(Resource):
     def post(self):
         response = {}
         data = request.get_json(force=True)
-        print(data)
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
         if data.get('name') == None \
@@ -274,7 +272,6 @@ class Kitchens(Resource):
         """Returns all kitchens"""
         response = {}
 
-
         try:
             openkitchens = db.scan(TableName='kitchens',
                 FilterExpression='isOpen = :value',
@@ -296,17 +293,19 @@ class Kitchens(Resource):
 class Meals(Resource):
     def post(self, kitchen_id):
         response = {}
+
         if request.form.get('name') == None \
           or request.form.get('items') == None \
-          or request.form.get('photo') == None \
           or request.form.get('price') == None:
             raise BadRequest('Request failed. Please provide required details.')
 
         meal_id = uuid.uuid4().hex
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
+        meal_items = json.loads(request.form['items'])
+
         items = []
-        for i in data['items']:
+        for i in meal_items['meal_items']:
             item = {}
             item['title'] = {}
             item['title']['S'] = i['title']
@@ -314,11 +313,11 @@ class Meals(Resource):
             item['qty']['N'] = str(i['qty'])
             items.append(item)
 
-        description = [{'M': x} for i in items]
+        description = [{'M': i} for i in items]
 
         try:
-            photo_path = upload_meal_img(request.form['photo'], BUCKET_NAME, 
-                'meals_imgs/{}_{}'.format(str(kitchen_id), meal_id))
+            photo_key = 'meals_imgs/{}_{}'.format(str(kitchen_id), str(meal_id))
+            photo_path = upload_meal_img(request.files['photo'], BUCKET_NAME, photo_key)
 
             if photo_path == None:
                 raise BadRequest('Request failed. \
@@ -328,9 +327,9 @@ class Meals(Resource):
                 Item={'meal_id': {'S': meal_id},
                       'created_at': {'S': created_at},
                       'kitchen_id': {'S': str(kitchen_id)},
-                      'name': {'S': str(request.form['name'])},
+                      'meal_name': {'S': str(request.form['name'])},
                       'description': {'L': description},
-                      'price': {'S': request.form['price']},
+                      'price': {'S': str(request.form['price'])},
                       'photo': {'S': photo_path}
                 }
             )
@@ -342,6 +341,9 @@ class Meals(Resource):
                     ':val': {'BOOL': True}
                 }
             )
+
+            response['message'] = 'Request successful'
+            return response, 201
         except:
             raise BadRequest('Request failed. Please try again later.')
 
@@ -361,10 +363,15 @@ class Meals(Resource):
             for meal in meals['Items']:
                 description = ''
 
-                for item in meal['description']:
-                    description += item['M']['title']['S']
+                for item in meal['description']['L']:
+                    if int(item['M']['qty']['N']) > 1:
+                        description = description + item['M']['qty']['N'] + ' ' \
+                                     + item['M']['title']['S'] + ', '
+                    else:
+                        description = description + item['M']['title']['S'] + ', '
 
                 del meal['description']
+                meal['description'] = {}
                 meal['description']['S'] = description
 
             response['message'] = 'Request successful!'
