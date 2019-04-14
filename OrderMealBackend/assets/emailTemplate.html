@@ -35,7 +35,7 @@
 			<h2>Hello, {{name}} </h2>
 			<div class="card">
 			  <div class="card-body">
-			    Your order from <strong>Leena's Kitchen</strong> is being prepared. It should be available for pickup after <strong>5:30PM</strong>
+			    Your order from <strong>{{kitchen.name}}</strong> is being prepared. It should be available for pickup after <strong>{{kitchen.pickup_time || 5:30PM}}</strong>
 			  </div>
 			</div>
 			<br>
@@ -68,13 +68,13 @@
 			<h4>Pickup Information</h4>
 			<div class="card">
 				<div class="card-body">
-					Pickup for {{name}} at Leena's Kitchen
+					Pickup for {{name}} at {{kitchen.name}}
 					<div class="card-body">
-						6123 Corte De La Reina<br>
-						San Jose, CA<br>
-						(408)XXX-XXXX
+						{{kitchen.address}}<br>
+						{{kitchen.city}}, {{kitchen.state}}<br>
+						{{kitchen.phone_number}}
 					</div>
-					Thank you for ordering with Leena's Kitchen. See you soon!
+					Thank you for ordering with {{kitchen.name}}. See you soon!
 				</div>
 			</div>
 	    </div>
