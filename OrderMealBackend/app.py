@@ -41,6 +41,12 @@ db = boto3.client('dynamodb')
 s3 = boto3.client('s3')
 
 
+@app.route('/<string:page_name>/')
+def render_static(page_name):
+    return render_template('%s.html' % page_name)
+
+
+
 # aws s3 bucket where the image is stored
 BUCKET_NAME = os.environ.get('MEAL_IMAGES_BUCKET')
 
@@ -205,66 +211,82 @@ class MealOrders(Resource):
 class RegisterKitchen(Resource):
     def post(self):
         response = {}
-        data = request.get_json(force=True)
+
+        name = request.form['name']
+        description = request.form['description']
+        username = request.form['username']
+        password = request.form['password']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        address = request.form['address']
+        city = request.form['city']
+        state = request.form['state']
+        zipcode = request.form['zipcode']
+        phone_number = request.form['phone_number']
+        close_time = request.form['close_time']
+        open_time = request.form['open_time']
+
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
-        if data.get('name') == None \
-          or data.get('description') == None \
-          or data.get('email') == None \
-          or data.get('username') == None \
-          or data.get('password') == None \
-          or data.get('first_name') == None \
-          or data.get('last_name') == None \
-          or data.get('address') == None \
-          or data.get('city') == None \
-          or data.get('state') == None \
-          or data.get('zipcode') == None \
-          or data.get('phone_number') == None \
-          or data.get('close_time') == None \
-          or data.get('open_time') == None:
+        if name == None \
+          or description == None \
+          or username == None \
+          or password == None \
+          or first_name == None \
+          or last_name == None \
+          or address == None \
+          or city == None \
+          or state == None \
+          or zipcode == None \
+          or phone_number == None \
+          or close_time == None \
+          or open_time == None:
             raise BadRequest('Request failed. Please provide all \
                               required information.')
 
-        # scan to check if the kitchen name exists
-        kitchen = db.scan(TableName="kitchens",
-            FilterExpression='name = :val',
-            ExpressionAttributeValues={
-                ':val': {'S': data['name']}
-            }
-        )
-
-        # raise exception if the kitchen name already exists
-        if kitchen.get('Items') != []:
-            response['message'] = 'This kitchen name is already taken.'
-            return response, 400
+        # # scan to check if the kitchen name exists
+        # kitchen = db.scan(TableName="kitchens",
+        #     FilterExpression='name = :val',
+        #     ExpressionAttributeValues={
+        #         ':val': {'S': name}
+        #     }
+        # )
+        #
+        # # raise exception if the kitchen name already exists
+        # if kitchen.get('Items') != []:
+        #     response['message'] = 'This kitchen name is already taken.'
+        #     return response, 400
 
         kitchen_id = uuid.uuid4().hex
 
         try:
-            add_kitchen = db.put_item(TableName='kitchens',
-                Item={'kitchen_id': {'S': kitchen_id},
-                      'created_at': {'S': created_at},
-                      'name': {'S': data['name']},
-                      'description': {'S': data['description']},
-                      'username': {'S': data['username']},
-                      'password': {'S': generate_password_hash(data['password'])},
-                      'first_name': {'S': data['first_name']},
-                      'last_name': {'S': data['last_name']},
-                      'address': {'S': data['address']},
-                      'city': {'S': data['city']},
-                      'state': {'S': data['state']},
-                      'zipcode': {'N': str(data['zipcode'])},
-                      'phone_number': {'S': str(data['phone_number'])},
-                      'open_time': {'S': str(data['open_time'])},
-                      'close_time': {'S': str(data['close_time'])},
-                      'isOpen': {'BOOL': False},
-                      'email': {'S': data['email']}
+            add_kitchen = db.put_item(TableName="kitchens",
+
+                Item={"kitchen_id": {"S": kitchen_id},
+                      "created_at": {"S": created_at},
+                      "name": {"S": str(name)},
+                      "description": {"S": str(description)},
+                      "username": {"S": str(username)},
+                      "password": {"S": generate_password_hash(password)},
+                      "first_name": {"S": str(first_name)},
+                      "last_name": {"S": str(last_name)},
+                      "address": {"S": str(address)},
+                      "city": {"S": str(city)},
+                      "state": {"S": str(state)},
+                      "zipcode": {"N": str(zipcode)},
+                      "phone_number": {"S": str(phone_number)},
+                      "open_time": {"S": str(open_time)},
+                      "close_time": {"S": str(close_time)},
+                      "isOpen": {"BOOL": False}
+                      #'email': {'S': str(email)}
                 }
             )
 
             response['message'] = 'Request successful'
+            print('request sent')
             return response, 200
-        except:
+        except Exception as e:
+            print(e)
             raise BadRequest('Request failed. Please try again later.')
             
 class Kitchens(Resource):
