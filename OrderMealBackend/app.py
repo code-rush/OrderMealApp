@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-04-13 19:41:02
+# @Last Modified time: 2019-05-13 18:57:30
 
 
 import os
@@ -41,12 +41,6 @@ db = boto3.client('dynamodb')
 s3 = boto3.client('s3')
 
 
-@app.route('/<string:page_name>/')
-def render_static(page_name):
-    return render_template('%s.html' % page_name)
-
-
-
 # aws s3 bucket where the image is stored
 BUCKET_NAME = os.environ.get('MEAL_IMAGES_BUCKET')
 
@@ -56,21 +50,6 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 # =======HELPER FUNCTIONS FOR UPLOADING AN IMAGE=============
-# def upload_file(file, bucket, key):
-#     image_uploaded = False
-
-#     if file and allowed_file(file.filename):
-#         upload_file = s3.put_object(
-#                             Bucket=bucket,
-#                             Body=file,
-#                             Key=key,
-#                             ACL='public-read',
-#                             ContentType='image/jpeg'
-#                         )
-#         image_uploaded = True
-
-#     return image_uploaded
-
 
 def upload_meal_img(file, bucket, key):
     if file and allowed_file(file.filename):
@@ -92,23 +71,19 @@ def allowed_file(filename):
 
 # ===========================================================  
 
-# class TodaysMealPhoto(Resource):
-#     def post(self):
-#         """Uploads image to s3 bucket"""
-#         file = request.files['image']
-#         response = {}
 
-#         key = datetime.now(tz=timezone('US/Pacific')).strftime("%Y%m%d")
+def kitchenExists(kitchen_id):
+    # scan to check if the kitchen name exists
+    kitchen = db.scan(TableName="kitchens",
+        FilterExpression='kitchen_id = :val',
+        ExpressionAttributeValues={
+            ':val': {'S': kitchen_id}
+        }
+    )
 
-#         try:
-#             image_uploaded = upload_file(file, BUCKET_NAME, key)
-#             if image_uploaded:
-#                 response['message'] = 'File uploaded!'
-#             else:
-#                 response ['message'] = 'File not allowed!'
-#             return response, 200
-#         except:
-#             raise BadRequest('Request failed. File not uploaded.')
+    if kitchen.get('Items') == []:
+        return False
+    return True
 
 
 class MealOrders(Resource):
@@ -120,7 +95,6 @@ class MealOrders(Resource):
         data = request.get_json(force=True)
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
-        #print(data)
         if data.get('email') == None \
           or data.get('name') == None \
           or data.get('street') == None \
@@ -130,18 +104,24 @@ class MealOrders(Resource):
           or data.get('totalAmount') == None \
           or data.get('paid') == None \
           or data.get('paymentType') == None \
-          or data.get('order_items') == None \
+          or data.get('ordered_items') == None \
           or data.get('phone') == None \
           or data.get('kitchen_id') == None:
             raise BadRequest('Request failed. Please provide all \
                               required information.')
+
+        kitchenFound = kitchenExists(data['kitchen_id'])
+
+        # raise exception if the kitchen does not exists
+        if not kitchenFound:
+            raise BadRequest('kitchen does not exist')
 
         order_id = uuid.uuid4().hex
         totalAmount = data['totalAmount']
         #Version of order_items submitted to DB
         order_details = []
 
-        for i in data['order_items']:
+        for i in data['ordered_items']:
             item = {}
             item['meal_id'] = {}
             item['meal_id']['S'] = i['meal_id']
@@ -170,8 +150,8 @@ class MealOrders(Resource):
                 }
             )
             
-            kitchen = db.get_item(TableName='kitchens',
-                Key={'kitchen_id': {'S': data['kitchen_id']}})
+            # kitchen = db.get_item(TableName='kitchens',
+            #     Key={'kitchen_id': {'S': data['kitchen_id']}})
 
             # msg = Message(subject='Order Confirmation',
             #               sender=os.environ.get('EMAIL'),
@@ -211,82 +191,69 @@ class MealOrders(Resource):
 class RegisterKitchen(Resource):
     def post(self):
         response = {}
-
-        name = request.form['name']
-        description = request.form['description']
-        username = request.form['username']
-        password = request.form['password']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        address = request.form['address']
-        city = request.form['city']
-        state = request.form['state']
-        zipcode = request.form['zipcode']
-        phone_number = request.form['phone_number']
-        close_time = request.form['close_time']
-        open_time = request.form['open_time']
-
+        data = request.get_json(force=True)
         created_at = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%dT%H:%M:%S")
 
-        if name == None \
-          or description == None \
-          or username == None \
-          or password == None \
-          or first_name == None \
-          or last_name == None \
-          or address == None \
-          or city == None \
-          or state == None \
-          or zipcode == None \
-          or phone_number == None \
-          or close_time == None \
-          or open_time == None:
+        if data.get('name') == None \
+          or data.get('description') == None \
+          or data.get('email') == None \
+          or data.get('username') == None \
+          or data.get('password') == None \
+          or data.get('first_name') == None \
+          or data.get('last_name') == None \
+          or data.get('address') == None \
+          or data.get('city') == None \
+          or data.get('state') == None \
+          or data.get('zipcode') == None \
+          or data.get('phone_number') == None \
+          or data.get('close_time') == None \
+          or data.get('open_time') == None:
             raise BadRequest('Request failed. Please provide all \
                               required information.')
 
-        # # scan to check if the kitchen name exists
-        # kitchen = db.scan(TableName="kitchens",
-        #     FilterExpression='name = :val',
-        #     ExpressionAttributeValues={
-        #         ':val': {'S': name}
-        #     }
-        # )
-        #
-        # # raise exception if the kitchen name already exists
-        # if kitchen.get('Items') != []:
-        #     response['message'] = 'This kitchen name is already taken.'
-        #     return response, 400
+        # scan to check if the kitchen name exists
+        kitchen = db.scan(TableName="kitchens",
+            FilterExpression='#name = :val',
+            ExpressionAttributeNames={
+                '#name': 'name'
+            },
+            ExpressionAttributeValues={
+                ':val': {'S': data['name']}
+            }
+        )
+
+        # raise exception if the kitchen name already exists
+        if kitchen.get('Items') != []:
+            response['message'] = 'This kitchen name is already taken.'
+            return response, 400
 
         kitchen_id = uuid.uuid4().hex
 
         try:
-            add_kitchen = db.put_item(TableName="kitchens",
-
-                Item={"kitchen_id": {"S": kitchen_id},
-                      "created_at": {"S": created_at},
-                      "name": {"S": str(name)},
-                      "description": {"S": str(description)},
-                      "username": {"S": str(username)},
-                      "password": {"S": generate_password_hash(password)},
-                      "first_name": {"S": str(first_name)},
-                      "last_name": {"S": str(last_name)},
-                      "address": {"S": str(address)},
-                      "city": {"S": str(city)},
-                      "state": {"S": str(state)},
-                      "zipcode": {"N": str(zipcode)},
-                      "phone_number": {"S": str(phone_number)},
-                      "open_time": {"S": str(open_time)},
-                      "close_time": {"S": str(close_time)},
-                      "isOpen": {"BOOL": False}
-                      #'email': {'S': str(email)}
+            add_kitchen = db.put_item(TableName='kitchens',
+                Item={'kitchen_id': {'S': kitchen_id},
+                      'created_at': {'S': created_at},
+                      'name': {'S': data['name']},
+                      'description': {'S': data['description']},
+                      'username': {'S': data['username']},
+                      'password': {'S': generate_password_hash(data['password'])},
+                      'first_name': {'S': data['first_name']},
+                      'last_name': {'S': data['last_name']},
+                      'address': {'S': data['address']},
+                      'city': {'S': data['city']},
+                      'state': {'S': data['state']},
+                      'zipcode': {'N': str(data['zipcode'])},
+                      'phone_number': {'S': str(data['phone_number'])},
+                      'open_time': {'S': str(data['open_time'])},
+                      'close_time': {'S': str(data['close_time'])},
+                      'isOpen': {'BOOL': False},
+                      'email': {'S': data['email']}
                 }
             )
 
             response['message'] = 'Request successful'
-            print('request sent')
             return response, 200
-        except Exception as e:
-            print(e)
+        except:
             raise BadRequest('Request failed. Please try again later.')
             
 class Kitchens(Resource):
@@ -296,13 +263,10 @@ class Kitchens(Resource):
 
         try:
             openkitchens = db.scan(TableName='kitchens',
-                FilterExpression='isOpen = :value',
-                ProjectionExpression='#kitchen_name, kitchen_id, close_time, description',
+                ProjectionExpression='#kitchen_name, kitchen_id, \
+                    close_time, description, open_time, isOpen',
                 ExpressionAttributeNames={
                     '#kitchen_name': 'name'
-                },
-                ExpressionAttributeValues={
-                    ':value': {'BOOL': True}
                 }
             )
 
@@ -312,9 +276,16 @@ class Kitchens(Resource):
         except:
             raise BadRequest('Request failed. Please try again later.')
 
+
 class Meals(Resource):
     def post(self, kitchen_id):
         response = {}
+
+        kitchenFound = kitchenExists(kitchen_id)
+
+        # raise exception if the kitchen does not exists
+        if not kitchenFound:
+            raise BadRequest('kitchen does not exist')
 
         if request.form.get('name') == None \
           or request.form.get('items') == None \
@@ -371,6 +342,13 @@ class Meals(Resource):
 
     def get(self, kitchen_id):
         response = {}
+
+        kitchenFound = kitchenExists(kitchen_id)
+
+        # raise exception if the kitchen does not exists
+        if not kitchenFound:
+            raise BadRequest('kitchen does not exist')
+
         todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
         
         try:
@@ -402,9 +380,17 @@ class Meals(Resource):
         except:
             raise BadRequest('Request failed. Please try again later.')
 
+
 class OrderReport(Resource):
     def get(self, kitchen_id):
         response = {}
+
+        kitchenFound = kitchenExists(kitchen_id)
+
+        # raise exception if the kitchen does not exists
+        if not kitchenFound:
+            raise BadRequest('kitchen does not exist')
+
         todays_date = datetime.now(tz=timezone('US/Pacific')).strftime("%Y-%m-%d")
         k_id = kitchen_id
 
@@ -416,6 +402,14 @@ class OrderReport(Resource):
                     ':x1': {'S': todays_date}
                 }
             )
+
+            # allMeals = []
+            
+            # for order in orders['Items']:
+            #     for meals in order['order_items']['L']:
+            #         meals_info = db.get(TableName='meals',
+            #             Key={'meal_id': meals['M']['meal_id']}
+            #         )
 
             response['result'] = orders['Items']
             response['message'] = 'Request successful'
