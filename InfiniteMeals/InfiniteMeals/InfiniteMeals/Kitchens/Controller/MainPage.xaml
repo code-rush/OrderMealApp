@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:InfiniteMeals" x:Class="InfiniteMeals.MainPage" Title="Kitchens">
+    <ListView x:Name="kitchensListView" VerticalOptions="StartAndExpand" Footer="" HasUnevenRows="true" IsPullToRefreshEnabled="true">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Margin="15, 15, 0, 15" Orientation="Vertical">
+                        <Label Text="{Binding title}" HorizontalOptions="StartAndExpand" FontSize="Large" FontAttributes="Bold"/>
+                        <Label Text="{Binding description}" HorizontalOptions="StartAndExpand" FontSize="Medium" FontAttributes="Italic"/>
+                        
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Open Hours:" FontAttributes="Bold" FontSize="Micro"/>
+                            <Label Text="{Binding open_time}" FontSize="Micro"/>
+                            <Label Text="-" FontSize="Micro"/>
+                            <Label Text="{Binding close_time}" FontSize="Micro"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
