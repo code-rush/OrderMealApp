@@ -1,6 +1,0 @@
-MonoTouch: Could not install sigaction override, unexpected sigaction implementation.
-2019-03-18 15:40:15.300553-0700 OrderMeal.iOS[25061:3428631] SecTaskLoadEntitlements failed error=22 cs_flags=200, pid=25061
-2019-03-18 15:40:15.301082-0700 OrderMeal.iOS[25061:3428631] SecTaskCopyDebugDescription: OrderMeal.iOS[25061]/0#-1 LF=0
-2019-03-18 15:40:15.495140-0700 OrderMeal.iOS[25061:3428631] https://s3-us-west-2.amazonaws.com/ordermealapp/20190318
-2019-03-18 15:40:16.730472-0700 OrderMeal.iOS[25061:3428683] SecTaskLoadEntitlements failed error=22 cs_flags=200, pid=25061
-2019-03-18 15:40:16.730684-0700 OrderMeal.iOS[25061:3428683] SecTaskCopyDebugDescription: OrderMeal.iOS[25061]/0#-1 LF=0
