@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-05-24 19:40:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-06-09 13:04:44
+# @Last Modified time: 2019-06-09 13:35:34
 
 
 import string
@@ -31,7 +31,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 login_manager = LoginManager(app)
 
-secret_key = 'HB4EO2BSSDDAQ7B9RA51QQRHTT53FA41'
+secret_key = 'some_secret_key'
 
 app.config['SECRET_KEY'] = secret_key
 app.config['MAIL_USERNAME'] = 'infiniteoptions.meals@gmail.com'
@@ -43,15 +43,17 @@ app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
 
+AWS_KEY_ID = 'aws_key_id'
+AWS_SECRET_KEY = 'aws_secret_key'
+
 db = boto3.client('dynamodb', 
           region_name='us-west-2',
-          aws_access_key_id='AKIAJARHVMJUNY2F3FCQ',
-          aws_secret_access_key='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')
+          aws_access_key_id=AWS_KEY_ID,
+          aws_secret_access_key=AWS_SECRET_KEY)
 
 s3 = boto3.client('s3',
-    aws_access_key_id='AKIAJARHVMJUNY2F3FCQ',
-    aws_secret_access_key='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')
-
+    aws_access_key_id=AWS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_KEY)
 
 
 # aws s3 bucket where the image is stored
