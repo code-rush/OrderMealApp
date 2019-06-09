@@ -1,10 +1,20 @@
+/*
+* @Author: Japan Parikh
+* @Date:   2019-05-24 20:59:01
+* @Last Modified by:   Japan Parikh
+* @Last Modified time: 2019-05-28 19:07:24
+*/
 
-
-.login-form{
+.login-form {
     width: 360px;
     padding:10% 0 0;
     margin: auto;
 }
+
+.form-row {
+    margin-top: 10px;
+}
+
 input.form-control {
     font-family: "Roboto", sans-serif;
     outline: 1;
@@ -14,25 +24,20 @@ input.form-control {
     margin-bottom: 5px;
 }
 
-body {
-    padding-top: 60px;
-    padding-bottom: 55px;
-}
-
-.navbar-default{
+.navbar-default {
     background-color: dodgerblue;
     border-color:rosybrown;
 }
 
-.navbar-default .navbar-brand{
+.navbar-default .navbar-brand {
     color: white;
 }
 
-.navbar a{
+.navbar a {
     color:white;
 }
 
-.jga-toolbar{
+.jga-toolbar {
     position: absolute;
     right: 15px;
     background-color: white;
@@ -43,5 +48,7 @@ body {
     z-index: 1;
 }
 
-a:hover{text-decoration: none;}
+a:hover {
+    text-decoration: none;
+}
 
