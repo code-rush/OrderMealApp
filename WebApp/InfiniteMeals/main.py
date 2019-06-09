@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-05-24 19:40:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-06-09 13:35:34
+# @Last Modified time: 2019-06-09 13:37:30
 
 
 import string
@@ -31,7 +31,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 login_manager = LoginManager(app)
 
-secret_key = 'some_secret_key'
+secret_key = 'app_secret_key'
 
 app.config['SECRET_KEY'] = secret_key
 app.config['MAIL_USERNAME'] = 'infiniteoptions.meals@gmail.com'
@@ -43,8 +43,8 @@ app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
 
-AWS_KEY_ID = 'aws_key_id'
-AWS_SECRET_KEY = 'aws_secret_key'
+AWS_KEY_ID = 'aws-key-id'
+AWS_SECRET_KEY = 'aws-secret-access-key'
 
 db = boto3.client('dynamodb', 
           region_name='us-west-2',
