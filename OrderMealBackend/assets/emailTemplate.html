@@ -2,9 +2,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<title></title>
-</head>
-<body>
+
 	<style>
  		.card {
  			border:none;
@@ -18,69 +16,84 @@
  			line-height: 1.0;
  		}
  		#infinite_meals {
- 			margin-top: 0.75rem;
+ 			margin-top: 0.75em;
  		}
 
 	</style>
+</head>
+<body>
 	<div class="container">
-	  <div class="row">
-	    <div class="col">
-	    </div>
-	    <div class="col-8">
-	      	<ul class="nav justify-content-center">
-			  <li class="nav-item">
-			    <h2 id="infinite_meals">Infinite Meals</h2>
-			  </li>
-			</ul><br>
-			<h2>Hello, {{name}} </h2>
-			<div class="card">
-			  <div class="card-body">
-			    Your order from <strong>{{kitchen.name}}</strong> is being prepared. It should be available for pickup after <strong>{{kitchen.pickup_time || 5:30PM}}</strong>
-			  </div>
+		<div class="row">
+			<div class="col">
 			</div>
-			<br>
-			<h4>Your Order</h4>
-			<div class="card">
-				<div class="card-body">
-					 <div class="row">
-	    				<div class="col-sm">
-	    					<strong>Item</strong><br>
-	    					Option 1<br>
-	    					Option 2<br>
-	    					<strong>Total</strong>
-	    				</div>
-	    				<div class="col-sm">
-	    					<strong>Quantity</strong><br>
-	    					{{mealOption1}}<br>
-	    					{{mealOption2}}<br>
-	    					<strong>(w/ Tax)</strong>
-	    				</div>
-	    				<div class="col-sm">
-	    					<strong>Cost</strong><br>
-	    					$20<br>
-	    					$24<br>
-	    					<strong>{{totalAmount}}</strong>
-	    				</div>
-	    			</div>
-				</div>
-			</div>
-			<br>
-			<h4>Pickup Information</h4>
-			<div class="card">
-				<div class="card-body">
-					Pickup for {{name}} at {{kitchen.name}}
+			
+			<div class="col-10">
+				<ul class="nav justify-content-center">
+					<li class="nav-item">
+					<h2 id="infinite_meals">Infinite Meals</h2>
+					</li>
+				</ul>
+
+				<br>
+				
+				<h2>Hello, {{ name }} </h2>
+				
+				<div class="card">
 					<div class="card-body">
-						{{kitchen.address}}<br>
-						{{kitchen.city}}, {{kitchen.state}}<br>
-						{{kitchen.phone_number}}
+						Your order from <strong>{{ kitchen.name.S }}</strong> is being prepared. It should be available for pickup after <strong>{% if kitchen.pickup_time %} kitchen.pickup_time.S {% else %} 5:30pm {% endif %}</strong>
 					</div>
-					Thank you for ordering with {{kitchen.name}}. See you soon!
+				</div>
+				
+				<br>
+				
+				<h4>Your Order</h4>
+				
+				<div class="card">
+					<div class="card-body">
+						 <div class="row">
+							<div class="col-sm">
+								<strong>Item</strong><br><br>
+								{% for item in order_items %}
+									{{ item.name }}<br>
+								{% endfor %}
+								<strong>Total</strong>
+							</div>
+							<div class="col-sm">
+								<strong>Quantity</strong><br><br>
+								{% for item in order_items %}
+									{{ item.qty }}<br>
+								{% endfor %}
+								<strong>(w/ Tax)</strong>
+							</div>
+							<div class="col-sm">
+								<strong>Cost</strong><br><br>
+								{% for item in order_items %}
+									{{ item.price }}<br>
+								{% endfor %}
+								<strong>{{ totalAmount }}</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+			
+				<h4>Pickup Information</h4>
+				<div class="card">
+					<div class="card-body">
+						Pickup for {{ name }} at {{ kitchen.name.S }}
+							<div class="card-body">
+								{{ kitchen.address.S }}<br>
+								{{ kitchen.city.S }}, {{ kitchen.state.S }}<br>
+								{{ kitchen.phone_number.S }}
+							</div>
+						Thank you for ordering with {{ kitchen.name.S }}. See you soon!
+					</div>
 				</div>
 			</div>
-	    </div>
-	    <div class="col">
-	    </div>
-	  </div>
+
+			<div class="col">
+			</div>
+	  	</div>
 	</div>
 </body>
 </html>

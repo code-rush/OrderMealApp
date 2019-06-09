@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-02-16 15:26:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-05-13 18:57:30
+# @Last Modified time: 2019-06-08 17:59:21
 
 
 import os
@@ -74,7 +74,7 @@ def allowed_file(filename):
 
 def kitchenExists(kitchen_id):
     # scan to check if the kitchen name exists
-    kitchen = db.scan(TableName="kitchens",
+    kitchen = db.scan(TableName='kitchens',
         FilterExpression='kitchen_id = :val',
         ExpressionAttributeValues={
             ':val': {'S': kitchen_id}
@@ -118,7 +118,7 @@ class MealOrders(Resource):
 
         order_id = uuid.uuid4().hex
         totalAmount = data['totalAmount']
-        #Version of order_items submitted to DB
+
         order_details = []
 
         for i in data['ordered_items']:
@@ -150,18 +150,25 @@ class MealOrders(Resource):
                 }
             )
             
-            # kitchen = db.get_item(TableName='kitchens',
-            #     Key={'kitchen_id': {'S': data['kitchen_id']}})
+            kitchen = db.get_item(TableName='kitchens',
+                Key={'kitchen_id': {'S': data['kitchen_id']}},
+                ProjectionExpression='#kitchen_name, address, city, \
+                    #address_state, phone_number, pickup_time',
+                ExpressionAttributeNames={
+                    '#kitchen_name': 'name',
+                    '#address_state': 'state'
+                }
+            )
 
-            # msg = Message(subject='Order Confirmation',
-            #               sender=os.environ.get('EMAIL'),
-            #               html=render_template('emailTemplate.html',
-            #                    order_items=data['order_items'],
-            #                    kitchen=kitchen['Item'],
-            #                    totalAmount=totalAmount, name=data['name']),
-            #               recipients=[data['email']])
+            msg = Message(subject='Order Confirmation',
+                          sender=os.environ.get('EMAIL'),
+                          html=render_template('emailTemplate.html',
+                              order_items=data['ordered_items'],
+                              kitchen=kitchen['Item'],
+                              totalAmount=totalAmount, name=data['name']),
+                          recipients=[data['email']])
 
-            # mail.send(msg)
+            mail.send(msg)
 
             response['message'] = 'Request successful'
             return response, 200
@@ -252,9 +259,23 @@ class RegisterKitchen(Resource):
             )
 
             response['message'] = 'Request successful'
+            response['kitchen_id'] = kitchen_id
             return response, 200
         except:
             raise BadRequest('Request failed. Please try again later.')
+
+
+def formateTime(time):
+    hours = time.rsplit(':', 1)[0]
+    mins = time.rsplit(':', 1)[1]
+    if hours == '00':
+        return '{}:{} AM'.format('12', mins)
+    elif hours >= '12' and hours < '24':
+        if hours == '12':
+            return '{}:{} PM'.format(hours, mins)
+        return '{}:{} PM'.format((int(hours) - 12), mins)
+    else:
+        return '{}:{} AM'.format(hours, mins)
             
 class Kitchens(Resource):
     def get(self):
@@ -262,7 +283,7 @@ class Kitchens(Resource):
         response = {}
 
         try:
-            openkitchens = db.scan(TableName='kitchens',
+            kitchens = db.scan(TableName='kitchens',
                 ProjectionExpression='#kitchen_name, kitchen_id, \
                     close_time, description, open_time, isOpen',
                 ExpressionAttributeNames={
@@ -270,8 +291,19 @@ class Kitchens(Resource):
                 }
             )
 
+            result = []
+
+            for kitchen in kitchens['Items']:
+                kitchen['open_time']['S'] = formateTime(kitchen['open_time']['S'])
+                kitchen['close_time']['S'] = formateTime(kitchen['close_time']['S'])
+                
+                if kitchen['isOpen']['BOOL'] == True:
+                    result.insert(0, kitchen)
+                else:
+                    result.append(kitchen)
+
             response['message'] = 'Request successful'
-            response['result'] = openkitchens['Items']
+            response['result'] = result
             return response, 200
         except:
             raise BadRequest('Request failed. Please try again later.')
@@ -418,40 +450,12 @@ class OrderReport(Resource):
             raise BadRequest('Request failed. please try again later.')
 
 
-class KitchenSignIn(Resource):
-    def post(self):
-        response = {}
-        data = request.get_json(force=True)
-
-        if data.get('email') == None:
-            raise BadRequest('Request failed. Please provide email.')
-
-        try:
-            user = db.query(TableName="kitchens",
-                IndexName='email-index',
-                Limit=1,
-                KeyConditionExpression='email = :val',
-                ExpressionAttributeValues={
-                    ':val': {'S': data['email']}
-                }
-            )
-
-            if user.get('Item') == None:
-                raise NotFound('User not found.')
-
-            response['message'] = 'Request successful!'
-            return response, 200
-        except:
-            raise BadRequest('Request failed. Please try again later.')
-
-
 api.add_resource(MealOrders, '/api/v1/orders')
 # api.add_resource(TodaysMealPhoto, '/api/v1/meal/image/upload')
 api.add_resource(RegisterKitchen, '/api/v1/kitchens/register')
 api.add_resource(Meals, '/api/v1/meals/<string:kitchen_id>')
 api.add_resource(OrderReport, '/api/v1/orders/report/<string:kitchen_id>')
 api.add_resource(Kitchens, '/api/v1/kitchens')
-api.add_resource(KitchenSignIn, '/api/v1/kitchens/sign_in')
 
 if __name__ == '__main__':
     app.run()

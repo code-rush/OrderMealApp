@@ -8,8 +8,8 @@
         "s3_bucket": "zappa-4go7axs3l",
         "environment_variables": {
             "MEAL_IMAGES_BUCKET": "ordermealapp",
-            "EMAIL": "YOUR EMAIL ADDRESS",
-            "PASSWORD": "YOUR ACCOUNT PASSWORD"
+            "EMAIL": "infiniteoptions.meals@gmail.com",
+            "PASSWORD": "annApurna"
         }
     }
 }
