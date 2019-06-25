@@ -105,7 +105,7 @@ def _login_manager_load_user(user_id):
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+  return render_template('landing.html')
 
 
 @app.route('/accounts/logout')
