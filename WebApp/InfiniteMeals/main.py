@@ -2,7 +2,7 @@
 # @Author: Japan Parikh
 # @Date:   2019-05-24 19:40:12
 # @Last Modified by:   Japan Parikh
-# @Last Modified time: 2019-06-09 13:37:30
+# @Last Modified time: 2019-06-28 17:08:15
 
 
 import string
@@ -105,7 +105,7 @@ def _login_manager_load_user(user_id):
 
 @app.route('/')
 def index():
-  return render_template('landing.html')
+    return render_template('landing.html')
 
 
 @app.route('/accounts/logout')
