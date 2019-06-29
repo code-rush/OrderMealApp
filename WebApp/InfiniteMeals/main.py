@@ -239,7 +239,7 @@ def updateRegistration():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    if username == None or password == None
+    if username == None or password == None:
         print('Missing username or password')
         return
 
@@ -269,9 +269,9 @@ def updatePersonalInformation():
     phone_number = request.form.get('phoneNumber')
     email = request.form.get('email')
 
-    if first_name == None or last_name == None or address == None
-      or city == None or state == None or zipcode == None
-      or phone_number == None or email == None
+    if first_name == None or last_name == None or address == None \
+      or city == None or state == None or zipcode == None \
+      or phone_number == None or email == None:
         flash('Please fill in all the required fields')
         return render_template('kitchen-information.html')
 
@@ -304,9 +304,9 @@ def updateKitchenInformation():
     delivery_close_time = request.form.get('deliveryCloseTime')
     delivery_option = request.form.get('deliveryOption')
 
-    if name == None or description == None or open_time == None
-      or close_time == None or delivery_open_time == None or delivery_close_time == None
-      or delivery_option == None
+    if name == None or description == None or open_time == None \
+      or close_time == None or delivery_open_time == None or delivery_close_time == None \
+      or delivery_option == None:
         flash('Please fill in all the required fields')
         return render_template('kitchen-information.html')
 
