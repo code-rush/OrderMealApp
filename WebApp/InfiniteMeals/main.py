@@ -233,7 +233,7 @@ def kitchen(id):
                             todaysMeals=todaysMenu)
 
 
-@app.route('/kitchens/registration/<string:id>', methods=['PUT'])
+@app.route('/kitchens/registration', methods=['POST'])
 @login_required
 def updateRegistration():
     username = request.form.get('username')
@@ -257,7 +257,7 @@ def updateRegistration():
     return render_template('kitchen-information.html')
 
 
-@app.route('/kitchens/personal-information/<string:id>', methods=['PUT'])
+@app.route('/kitchens/personal-information', methods=['POST'])
 @login_required
 def updatePersonalInformation():
     first_name = request.form.get('firstName')
@@ -293,7 +293,7 @@ def updatePersonalInformation():
     return render_template('kitchen-information.html')
 
 
-@app.route('/kitchens/kitchen-information/<string:id>', methods=['PUT'])
+@app.route('/kitchens/kitchen-information', methods=['POST'])
 @login_required
 def updateKitchenInformation():
     name = request.form.get('kitchenName')
