@@ -308,6 +308,32 @@ class Kitchens(Resource):
         except:
             raise BadRequest('Request failed. Please try again later.')
 
+    def put(self, kitchen_id):
+        """Updates kitchen information"""
+        response = {}
+        data = request.get_json(force=True)
+        key = 'first_name'
+
+        if (key not in data):
+            raise BadRequest('Missing field: ' + key)
+
+        if (kitchenExists(kitchen_id)):
+            try:
+                db.update_item(TableName='kitchens',
+                    Key={'kitchen_id': {'S': str(kitchen_id)}},
+                    UpdateExpression='SET first_name = :fn',
+                    ExpressionAttributeValues={
+                        ':fn': {'S': data[key]},
+                    }
+                )
+                response['message'] = 'Update successful'
+                return response, 200
+            except Exception as e:
+                print(e)
+                raise BadRequest('Request failed. Please try again later.')
+        else:
+            return response, 404
+
 
 class Meals(Resource):
     def post(self, kitchen_id):
@@ -455,7 +481,7 @@ api.add_resource(MealOrders, '/api/v1/orders')
 api.add_resource(RegisterKitchen, '/api/v1/kitchens/register')
 api.add_resource(Meals, '/api/v1/meals/<string:kitchen_id>')
 api.add_resource(OrderReport, '/api/v1/orders/report/<string:kitchen_id>')
-api.add_resource(Kitchens, '/api/v1/kitchens')
+api.add_resource(Kitchens, '/api/v1/kitchens/<string:kitchen_id>')
 
 if __name__ == '__main__':
     app.run()
