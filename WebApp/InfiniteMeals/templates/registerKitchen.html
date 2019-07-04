@@ -33,6 +33,7 @@
 </head>
 
 <body class="backgroundImgSetting">
+  <form method="POST" action="{{ url_for('register')}}">
     <div class="container container-class">
         <font face="Rozha One" color="white"><h2>Kitchen Registration</h2></font>
             <div class= "wrap">
@@ -121,13 +122,12 @@
             </div>
 
             <div class="col-4 register-btn">
-                <button type="button" onclick="location.href='';" class="button regbtn">Submit</button>
+                <button type="submit" class="button regbtn">Submit</button>
             </div>
 
         </div>
     </div>
-
-
+  <form>
 </body>
 
 </html>
