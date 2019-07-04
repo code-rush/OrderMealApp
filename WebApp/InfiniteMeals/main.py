@@ -213,7 +213,7 @@ def register():
         else:
             return redirect(url_for('kitchen', id=response.json().get('kitchen_id')))
 
-    return render_template('register.html')
+    return render_template('registerKitchen.html')
 
 
 @app.route('/kitchens/<string:id>')
