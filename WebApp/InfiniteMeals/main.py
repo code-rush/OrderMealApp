@@ -190,11 +190,11 @@ def register():
           or openTime == None or zipcode == None or state == None or city == None \
           or street == None or description == None:
             flash('Please fill in all the required fields')
-            return render_template('register.html')
+            return render_template('registerKitchen.html')
         
         if verifyPassword != password:
             flash('Your passwords don\'t match')
-            return render_template('register.html')
+            return render_template('registerKitchen.html')
 
         request_data = {'email': email, 'password': password, 
                         'username': username, 'first_name': firstName,
@@ -204,7 +204,7 @@ def register():
                         'phone_number': phoneNumber, 'close_time': closeTime,
                         'open_time': openTime}
 
-        apiURL = API_BASE_URL +'api/v1/kitchens/register'
+        apiURL = API_BASE_URL +'api/v1/kitchen'
         response = requests.post(apiURL, data=json.dumps(request_data))
 
         if response.json().get('message') == 'Request failed. Please try again later.':
